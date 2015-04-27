@@ -12,5 +12,5 @@ $(FILE).pdf : $(FILE).tex
 	$(TEX) $(FILE).tex  
 	$(TEX) $(FILE).tex  
 clean:
-	rm -f $(FILE).aux $(FILE).log $(FILE).blg $(FILE).bbl $(FILE).out $(FILE).pdf
-
+	rm -f $(FILE).aux $(FILE).log $(FILE).nav $(FILE).out 
+	rm -f $(FILE).pdf $(FILE).snm $(FILE).toc $(FILE).vrb
