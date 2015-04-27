@@ -1,10 +1,7 @@
-\documentclass[c,mathserif,compress,xcolor=svgnames]{beamer} 
-\mode<presentation>
-{  
-  \setbeamertemplate{background canvas}[vertical shading][bottom=blue!5,top=blue!5]
-  \setbeamertemplate{navigation symbols}{}%{\insertsectionnavigationsymbol}
-  \usetheme{LSU}
-}
+\documentclass[10pt,t]{beamer}
+\setbeamersize{text margin left=10pt,text margin right=10pt}
+\usetheme{lehigh}
+\usepackage{fancyvrb}
 
 \usefonttheme{professionalfonts}
 \usefonttheme{serif}
@@ -155,9 +152,6 @@ deletekeywords={\dots},              % if you want to delete keywords from the g
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 
-\setbeamercovered{dynamic}
-\beamersetaveragebackground{DarkBlue!2}
-\beamertemplateballitem
 
 \definecolor{DarkGreen}{rgb}{0.0,0.3,0.0}
 \definecolor{Blue}{rgb}{0.0,0.0,0.8} 
@@ -169,7 +163,7 @@ deletekeywords={\dots},              % if you want to delete keywords from the g
 \newcommand{\cmark}{\ding{51}}
 \newcommand{\xmark}{\ding{55}}
 \newcommand{\smark}{\ding{77}}
-\newcommand*\vardiamond{\textcolor{tigerspurple}{%
+\newcommand*\vardiamond{\textcolor{lubrown}{%
   \ensuremath{\blacklozenge}}}
 \newcommand*\up{\textcolor{green}{%
   \ensuremath{\blacktriangle}}}
@@ -224,25 +218,6 @@ deletekeywords={\dots},              % if you want to delete keywords from the g
 % This is only inserted into the PDF information catalog. Can be left
 % out. 
 
-
-
-
-% If you have a file called "university-logo-filename.xxx", where xxx
-% is a graphic format that can be processed by latex or pdflatex,
-% resp., then you can add a logo as follows:
-
-% Main Logo on bottom left
-\pgfdeclareimage[height=0.5cm]{institute-logo}{its-logo}
-\logo{\pgfuseimage{institute-logo}}
-% University Logo on top left
-\pgfdeclareimage[height=0.55cm]{university-logo}{LSUGeauxPurp}
-\tllogo{\pgfuseimage{university-logo}}
-% Logo at top right
-\pgfdeclareimage[height=0.55cm]{its-logo}{LONI}
-\trlogo{\pgfuseimage{its-logo}}
-% Logo at bottom right
-\pgfdeclareimage[height=0.5cm]{hpc-logo}{cct-logo}
-\brlogo{\pgfuseimage{hpc-logo}}
 
 % for the list of parts
 \makeatletter
@@ -747,11 +722,11 @@ Kind of real c =  8  with precision = 15  and range = 307
     \begin{eblock}{\scriptsize Logical Expressions}
       \begin{itemize}
         \footnotesize
-        \item[]{\color{tigerspurple}.AND.} intersection
-        \item[]{\color{tigerspurple}.OR.} union
-        \item[]{\color{tigerspurple}.NOT.} negation
-        \item[]{\color{tigerspurple}.EQV.} logical equivalence
-        \item[]{\color{tigerspurple}.NEQV.} exclusive or
+        \item[]{\color{lubrown}.AND.} intersection
+        \item[]{\color{lubrown}.OR.} union
+        \item[]{\color{lubrown}.NOT.} negation
+        \item[]{\color{lubrown}.EQV.} logical equivalence
+        \item[]{\color{lubrown}.NEQV.} exclusive or
       \end{itemize}
     \end{eblock}
     \column{0.5\textwidth}
@@ -1751,26 +1726,6 @@ end do finite
     \item Fortran 90 course at University of Liverpool, \url{http://www.liv.ac.uk/HPC/F90page.html}
     \item Introduction to Modern Fortran, University of Cambridge, \url{http://www.ucs.cam.ac.uk/docs/course-notes/unix-courses/Fortran}
     \item Scientific Programming in Fortran 2003: A tutorial Including Object-Oriented Programming, Katherine Holcomb, University of Virginia.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Additional Help}
-  \begin{itemize}
-    \item Online Courses: \url{http://moodle.hpc.lsu.edu}
-    \item Contact us
-    \begin{enumerate}
-      {\scriptsize
-        \item[$\vardiamond$]Email ticket system: sys-help@loni.org
-        \item[$\vardiamond$]Telephone Help Desk: 225-578-0900
-        \item[$\vardiamond$]Instant Messenger (AIM, Yahoo Messenger, Google Talk)
-        \begin{enumerate}
-          {\scriptsize
-            \item[$\bigstar$]Add "lsuhpchelp"
-          }
-        \end{enumerate}
-      }
-    \end{enumerate}
   \end{itemize}
 \end{frame}
 
@@ -3514,26 +3469,6 @@ end type painted_line_type
 %  \end{itemize}
 %\end{frame}
 
-\begin{frame}
-  \frametitle{Additional Help}
-  \begin{itemize}
-    \item Online Courses: \url{http://moodle.hpc.lsu.edu}
-    \item Contact us
-    \begin{enumerate}
-      {\scriptsize
-        \item[$\vardiamond$]Email ticket system: sys-help@loni.org
-        \item[$\vardiamond$]Telephone Help Desk: 225-578-0900
-        \item[$\vardiamond$]Instant Messenger (AIM, Yahoo Messenger, Google Talk)
-        \begin{enumerate}
-          {\scriptsize
-            \item[$\bigstar$]Add "lsuhpchelp"
-          }
-        \end{enumerate}
-      }
-    \end{enumerate}
-  \end{itemize}
-\end{frame}
-
 \section{Exercise}
 \begin{frame}
   \frametitle{\small Hands-On Exercise: Molecular Dynamics}
@@ -3636,24 +3571,6 @@ end type painted_line_type
     \end{algorithmic}
   \end{algorithm}
 \end{frame}
-
-%\begin{frame}<0>
-%  \frametitle{}
-%  \color{DarkBlue}{
-%  \begin{center}
-%    {\fontsize{40}{60}\selectfont The End}\\
-%    \vspace{1cm}
-%    {\fontsize{20}{30}\selectfont Any Questions?}\\
-%    \vspace{0.5cm}
-%    {\fontsize{15}{30}\selectfont
-%      \color{red!80!black}{Next Week}\\      
-%      \color{red!80!black}{Introduction to Perl}\\
-%    }
-%    \vspace{0.5cm}
-%    {\fontsize{15}{20}\selectfont Survey: \color{red!90!white}{\url{http://www.hpc.lsu.edu/survey}}}
-%  \end{center}
-%  }
-%\end{frame}
 
 \end{document}
 
