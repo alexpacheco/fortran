@@ -1,17 +1,16 @@
 TEX = pdflatex 
-JOB = $(FILE)
 
 .DEFAULT = all
 .PHONY = all view
 
-all : $(JOB).pdf
+all : $(FILE).pdf
 
-view : $(JOB).pdf
-	open $(JOB).pdf
+view : $(FILE).pdf
+	open $(FILE).pdf
 
-$(JOB).pdf : $(JOB).tex 
-	$(TEX) $(JOB).tex  
-	$(TEX) $(JOB).tex  
+$(FILE).pdf : $(FILE).tex 
+	$(TEX) $(FILE).tex  
+	$(TEX) $(FILE).tex  
 clean:
-	rm -f $(JOB).aux $(JOB).log $(JOB).blg $(JOB).bbl $(JOB).out $(JOB).pdf
+	rm -f $(FILE).aux $(FILE).log $(FILE).blg $(FILE).bbl $(FILE).out $(FILE).pdf
 
