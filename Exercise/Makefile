@@ -7,7 +7,7 @@ fact2 :
 factorial :
 	gfortran -o factorial factorial.f90
 hello :
-	gfortran -o hello hello.f90
+	gfortran -o hello helloworld.f90
 kindfns :
 	gfortran -o kindfns kindfns.f90
 nested :

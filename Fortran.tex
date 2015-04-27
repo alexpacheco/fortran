@@ -363,7 +363,7 @@ deletekeywords={\dots},              % if you want to delete keywords from the g
 
 \begin{frame}[fragile]{FORTRAN 77 Example}
   \begin{eblock}{SAXPY Code}
-    \lstinputlisting[language={[77]Fortran},basicstyle=\fontsize{6}{5}\selectfont\ttfamily]{./saxpy.f}
+    \lstinputlisting[language={[77]Fortran},basicstyle=\fontsize{6}{5}\selectfont\ttfamily]{./Exercise/saxpy.f}
   \end{eblock}
 \end{frame}
 
@@ -390,7 +390,7 @@ deletekeywords={\dots},              % if you want to delete keywords from the g
 
 \begin{frame}[fragile]{FORTRAN 90 Example}
   \begin{eblock}{SAXPY Code}
-    \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{6}{5}\selectfont\ttfamily]{./saxpy.f90}
+    \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{6}{5}\selectfont\ttfamily]{./Exercise/saxpy.f90}
   \end{eblock}
 \end{frame}
 
@@ -1271,7 +1271,7 @@ altair:Exercise apacheco$ ./a.out
     \item For example, consider a program that declares a namelist as follows:\\
       \lstfortran{namelist/moldyn/natom,npartdim,tempK,nstep,dt}
     \item The corresponding input file can take the form
-      \lstinputlisting{./MolDyn/slides/md.inp}
+      \lstinputlisting{./Exercise/MolDyn/orig/md.inp}
     \item Note:
       \begin{itemize}
         \item parameters may appear in any order in the input file, and
@@ -2323,7 +2323,7 @@ program main
   end program main
   \end{lstlisting}
   \framebreak
-  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily]{./MolDyn/orig/md-orig.f90}
+  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily]{./Exercise/MolDyn/orig/md-orig.f90}
 \end{frame}
 
 \begin{frame}[fragile, allowframebreaks]{Subroutines}
@@ -2366,7 +2366,7 @@ program main
   \vspace{-0.5cm}
   \begin{columns}[t]
     \column{0.5\textwidth}
-      \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{3.5}{4}\selectfont\ttfamily]{./Code/verlet.f90}
+      \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{3.5}{4}\selectfont\ttfamily]{./Exercise/MolDyn/code/verlet.f90}
     \column{0.5\textwidth}
       \begin{lstlisting}[language={[90]Fortran},basicstyle=\fontsize{3.5}{4.5}\selectfont\ttfamily,mathescape]
 program md
@@ -2428,7 +2428,7 @@ end program md
     \item \lstfortran{function}s operate on the same principle as \lstfortran{subroutine}s
     \item The only difference is that \lstfortran{function} returns a value and does not involve the \lstfortran{call} statement 
   \end{itemize}
-  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{3.5}{4.5}\selectfont\ttfamily,multicols=2]{./Code/potential.f90}
+  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{3.5}{4.5}\selectfont\ttfamily,multicols=2]{./Exercise/MolDyn/code/potential.f90}
 \end{frame}
 
 \begin{frame}[fragile]{Array-valued Functions}
@@ -2573,7 +2573,7 @@ end module potential
     \end{itemize}
     \column{4.5cm}
     \begin{eblock}{Example}
-      \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily]{./Code/linearmom.f90}
+      \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily]{./Exercise/MolDyn/code/linearmom.f90}
     \end{eblock}
   \end{columns}
 \end{frame}
@@ -2611,7 +2611,7 @@ end subroutine get_temp
 
 
         \end{lstlisting}
-%        \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily]{./Code/get_temp.f90}
+%        \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily]{./Exercise/MolDyn/ccode/get_temp.f90}
         \column{0.5\textwidth}
         \begin{lstlisting}[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,mathescape]
 subroutine initialize(coord_t0, vel_t0, acc_t0)
@@ -2894,10 +2894,10 @@ end subroutine verlet
     \item If not, the compiler will return an error message when you attempt to compile the program.
   \end{itemize}
   \framebreak
-  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,multicols=2]{./Code/verlet1.f90}
+  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,multicols=2]{./Exercise/MolDyn/code/verlet1.f90}
   \framebreak
   \vspace{-0.5cm}
-  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,multicols=2]{./Code/verlet2.f90}
+  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,multicols=2]{./Exercise/MolDyn/code/verlet2.f90}
   \vspace{-0.5cm}
   \begin{itemize}
     \scriptsize

@@ -19,5 +19,8 @@ all : serial
 serial : $(OBJS)
 	$(FC) $(FFLAGS) -o md $(OBJS)
 
+runmd : md
+	./md 
+
 %.o :%.f90
 	$(FC) $(FFLAGS) -c $<
