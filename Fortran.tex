@@ -1,19 +1,18 @@
 \documentclass[10pt,t]{beamer}
 \setbeamersize{text margin left=10pt,text margin right=10pt}
 \usetheme{lehigh}
-\usepackage{fancyvrb}
 
 \usefonttheme{professionalfonts}
 \usefonttheme{serif}
 
-\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
-\usepackage{amsmath,amssymb,amsfonts,subfigure,pifont}
+%\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+%\usepackage{amsmath,amssymb,amsfonts,subfigure,pifont}
 \usepackage{multirow,multicol}
-\usepackage{tabularx}
-\usepackage{booktabs}
-\usepackage{colortbl}
+%\usepackage{tabularx}
+%\usepackage{booktabs}
+%\usepackage{colortbl}
 \usepackage{algorithm,algpseudocode}
-\usepackage{etex}
+%\usepackage{etex}
 \usepackage{fancyvrb,listings}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -203,18 +202,17 @@ deletekeywords={\dots},              % if you want to delete keywords from the g
 {\end{beamerboxesrounded}}
 
 
-\title{Modern Fortran}
+\title{Modern Fortran Programming I}
 
 
 \author[Alex Pacheco]{\large{Alexander~B.~Pacheco}}
        
-%\institute[High Performance Computing @ Louisiana State University - http://www.hpc.lsu.edu] {\inst{}\footnotesize{User Services Consultant\\LSU HPC \& LONI\\sys-help@loni.org}}
-\institute[HPC Training: Spring 2014] {\inst{}\footnotesize{User Services Consultant\\LSU HPC \& LONI\\sys-help@loni.org}}
+\institute{\href{http://researchcomputing.lehigh.edu}{LTS Research Computing}}
 
-\date[\insertframenumber/\inserttotalframenumber\hfill\hspace{1.5cm}]{\scriptsize{HPC Training Spring 2014\\Louisiana State University\\Baton Rouge\\February 19 \& March 12, 2014}}
+\date{\today}
      
 \subject{Talks}
-\keywords{LONI \& LSU HPC Computing Resources, Fortran Programming}
+\keywords{Lehigh Research Computing Resources, Fortran Programming}
 % This is only inserted into the PDF information catalog. Can be left
 % out. 
 
@@ -229,17 +227,21 @@ deletekeywords={\dots},              % if you want to delete keywords from the g
 \newcommand{\beamer@partintoc}[3]{#2\par}
 \makeatother
 
-
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
-% \AtBeginSection[]
-% {
-%   \begin{frame}<beamer>
-%    \frametitle{{Outline}}
-%    \scriptsize
-%    \tableofcontents[currentsection,currentsubsection]
-%   \end{frame}
-% }
+\AtBeginSection[]
+{
+  \begingroup
+  \setbeamertemplate{background canvas}[vertical shading][bottom=lubrown,top=lubrown]
+  \setbeamertemplate{footline}[myfootline] 
+  \setbeamertemplate{section page}[mysection]
+  \frame[c]{
+    \sectionpage
+  }
+  \endgroup
+}
+
+\titlegraphic{\includegraphics[scale=0.5]{lu}}
 
 \begin{document}
 
