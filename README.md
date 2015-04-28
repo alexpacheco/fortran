@@ -10,8 +10,8 @@ This tutorial describes programming in Fortran 90/95 for beginners
 intermediate ( [TeX](Fortran/Fortran2.tex) | 
 [PDF](Fortran/Fortran2.pdf) ) users.
 
-    * LONI Workshop at LSU on Feb. 14, 2012
-    * HPC Training Series at LSU on Feb. 19, and Mar. 12, 2014
+ * LONI Workshop at LSU on Feb. 14, 2012
+ * HPC Training Series at LSU on Feb. 19, and Mar. 12, 2014
 
 # Contributer
 Alex Pacheco  
