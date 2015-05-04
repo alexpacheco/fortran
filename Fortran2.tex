@@ -735,7 +735,7 @@ end module potential
     \end{itemize}
     \column{4.5cm}
     \begin{eblock}{Example}
-      \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily]{./Exercise/MolDyn/code/linearmom.f90}
+      \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,firstline=393,lastline=413]{./MD/md-v3.f90}
     \end{eblock}
   \end{columns}
 \end{frame}
@@ -1081,28 +1081,7 @@ end subroutine verlet
     \end{enumerate}
   \end{itemize}
   \framebreak
-  \begin{lstlisting}[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,multicols=2]
-module precision
-  implicit none
-  save
-  integer, parameter :: ip = selected_int_kind(15)
-  integer, parameter :: dp = selected_real_kind(15)
-end module precision
-
-module param
-  use precision
-  implicit none
-  integer(ip) :: npartdim, natom, nstep, istep
-  real(dp) :: tempK, dt, boxl(3), alat, mass
-  real(dp) :: avtemp, ke, kb, epsilon, sigma, scale
-  real(dp),dimension(3,4) :: rcell = reshape( (/ &
-       0.0D+00, 0.0D+00, 0.0D+00, &
-       0.5D+00, 0.5D+00, 0.0D+00, &
-       0.0D+00, 0.5D+00, 0.5D+00, &
-       0.5D+00, 0.0D+00, 0.5D+00 /), (/ 3, 4 /) )
-  character(len=2) :: pot
-end module param
-  \end{lstlisting}
+  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,multicols=2,firstline=1,lastline=20]{./MD/md-v3.f90}
   \vspace{-0.5cm}
   \begin{itemize}
     \item within a \lstfortran{module}, functions and subroutines are called module procedures.
