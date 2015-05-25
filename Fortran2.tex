@@ -704,6 +704,28 @@ end module potential
     \end{columns}
 \end{frame}
 
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{\small Interfaces}
+  \begin{itemize}
+    \item The \lstfortran{interface} statement is the first statement in an interface block.
+    \item The \lstfortran{interface} block is a powerful structure that was introduced in FORTRAN 90.
+    \item When used, it gives a calling procedure the full knowledge of the types and characteristics of the dummy arguments that are used inside of the procedure that it references.
+    \item This can be a very good thing as it provides a way to execute some safety checks when compiling the program. 
+    \item Because the main program knows what argument types should be sent to the referenced procedure, it can check to see whether or not this is the case.
+    \item If not, the compiler will return an error message when you attempt to compile the program.
+  \end{itemize}
+  \framebreak
+  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,multicols=2]{./Exercise/MolDyn/code/verlet1.f90}
+  \framebreak
+  \vspace{-0.5cm}
+  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,multicols=2]{./Exercise/MolDyn/code/verlet2.f90}
+  \vspace{-0.5cm}
+  \begin{itemize}
+    \scriptsize
+    \item Here since \lstfortran{subroutine get_pot\_force} is an internal procedure, no \lstfortran{interface} is required since it is already implicit and all variable declarations are carried over from \lstfortran{subroutine verlet}
+  \end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Argument Association}
   \begin{itemize}
     \item Recall from MD code example the invocation
@@ -1042,28 +1064,6 @@ $\vdots$
 end subroutine verlet
     \end{lstlisting}
     \item A variable declared as \lstfortran{intent(in)} in a procedure cannot be changed during the execution of the procedure (see point 1 above)
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile,allowframebreaks]
-  \frametitle{\small Interfaces}
-  \begin{itemize}
-    \item The \lstfortran{interface} statement is the first statement in an interface block.
-    \item The \lstfortran{interface} block is a powerful structure that was introduced in FORTRAN 90.
-    \item When used, it gives a calling procedure the full knowledge of the types and characteristics of the dummy arguments that are used inside of the procedure that it references.
-    \item This can be a very good thing as it provides a way to execute some safety checks when compiling the program. 
-    \item Because the main program knows what argument types should be sent to the referenced procedure, it can check to see whether or not this is the case.
-    \item If not, the compiler will return an error message when you attempt to compile the program.
-  \end{itemize}
-  \framebreak
-  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,multicols=2]{./Exercise/MolDyn/code/verlet1.f90}
-  \framebreak
-  \vspace{-0.5cm}
-  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4}{5}\selectfont\ttfamily,multicols=2]{./Exercise/MolDyn/code/verlet2.f90}
-  \vspace{-0.5cm}
-  \begin{itemize}
-    \scriptsize
-    \item Here since \lstfortran{subroutine get_pot\_force} is an internal procedure, no \lstfortran{interface} is required since it is already implicit and all variable declarations are carried over from \lstfortran{subroutine verlet}
   \end{itemize}
 \end{frame}
 
