@@ -1,17 +1,15 @@
 # Modern Fortran
 Repository for storing my presentation, TeX and PDF files for HPC 
-Training on Fortran. Presentations are part of the HPC Training 
-conducted by High Performance Computing (HPC) at Louisiana State 
-University (LSU) on behalf of LSU and Louisiana Optical Network 
-Initiative (LONI).  
+Training on Fortran.
 
 This tutorial describes programming in Fortran 90/95 for beginners 
-( [TeX](Fortran/Fortran1.tex) | [PDF](Fortran/Fortran2.pdf) ) and
-intermediate ( [TeX](Fortran/Fortran2.tex) | 
-[PDF](Fortran/Fortran2.pdf) ) users.
+( [TeX](Fortran1.tex) | [PDF](Fortran2.pdf) ) and
+intermediate ( [TeX](Fortran2.tex) | 
+[PDF](Fortran2.pdf) ) users.
 
 * LONI Workshop at LSU on Feb. 14, 2012
 * HPC Training Series at LSU on Feb. 19, and Mar. 12, 2014
+* LTS Programming Workshop at Lehigh University on June 1-2, 2015
 
 # Contributer
 Alex Pacheco  
