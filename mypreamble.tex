@@ -126,9 +126,12 @@ deletekeywords={\dots},              % if you want to delete keywords from the g
 
 \algrenewcommand\algorithmicfunction{\textbf{program}}
 \algblockdefx[Program]{Program}{EndProgram}[1]{\textbf{program} \textsc{#1}}[1]{\textbf{end program} \textsc{#1}}
+
 \algloopdefx[doloop]{Do}[1]{\textbf{do} #1}
 \algcblockdefx[doloop]{If}{Do}{EndDo}
 [1]{\textbf{do} #1}{\textbf{end do}}
+
+
 
 
 \usepackage{tikz}
@@ -183,15 +186,15 @@ deletekeywords={\dots},              % if you want to delete keywords from the g
 {
 \setbeamercolor{upperblock}{fg=#1,bg=#2}
 \setbeamercolor{lowerblock}{fg=#3,bg=#4}
-\begin{beamerboxesrounded}[upper=upperblock,lower=lowerblock,shadow=true]}
+\begin{beamerboxesrounded}[upper=upperblock,lower=lowerblock,shadow=false]}
 {\end{beamerboxesrounded}}
 \newenvironment{ablock}[0]
 {
-\begin{beamerboxesrounded}[upper=uppercol,lower=lowercol,shadow=true]}
+\begin{beamerboxesrounded}[upper=uppercol,lower=lowercol,shadow=false]}
 {\end{beamerboxesrounded}}
 \newenvironment{bblock}[0]
 {
-\begin{beamerboxesrounded}[upper=uppercol1,lower=lowercol1,shadow=true]}
+\begin{beamerboxesrounded}[upper=uppercol1,lower=lowercol1,shadow=false]}
 {\end{beamerboxesrounded}}
 \newenvironment{eblock}[0]
 {

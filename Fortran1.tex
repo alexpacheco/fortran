@@ -22,7 +22,7 @@
        
 \institute{\href{http://researchcomputing.lehigh.edu}{LTS Research Computing}}
 
-\date{\today}
+\date{June 1, 2015}
      
 \subject{Talks}
 \keywords{Lehigh Research Computing Resources, Fortran Programming}
@@ -776,6 +776,23 @@ altair:Exercise apacheco$ ./a.out
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Exercise}
+  \begin{itemize}
+  \item Write a code to read a radius from standard input and calculate area and circumference of a circle of that radious
+  \end{itemize}
+  \begin{algorithm}[H]
+    \caption{Pseudo code for calculating area and circumference}
+    \begin{algorithmic}
+      \Program{areacircum}{}
+      \State Define $\pi$
+      \State $r \gets$ some number
+      \State $a = \pi{}r^2$
+      \State $c = 2\pi{}r$
+      \EndProgram{areacircum}
+    \end{algorithmic}
+  \end{algorithm}
+\end{frame}
+
 \section{Control Constructs}
 \begin{frame}[fragile] {Control Constructs}
   \begin{itemize}
@@ -827,6 +844,7 @@ else
   executable statements
 end if
       \end{lstlisting}
+      \framebreak
     \item Examples:
       \begin{lstlisting}[language={[90]Fortran},basicstyle=\fontsize{6}{5}\selectfont\ttfamily]
 if ( x < 50 ) then
@@ -846,9 +864,10 @@ end if
     \item The \lstfortran{end if} statement must not be omitted.
     \item The \lstfortran{if-then-else} construct can be nested and named.
   \end{itemize}
-  \framebreak
+%  \framebreak
   \begin{columns}
     \column{6cm}
+    \vspace{-0.5cm}
     \begin{block}{\scriptsize no \bftt{else if}}
       \begin{lstlisting}[language={[90]Fortran},basicstyle=\fontsize{6}{5}\selectfont\ttfamily]
 [outer_name:] if ( expression ) then
@@ -862,6 +881,7 @@ end if [outer_name]
       \end{lstlisting}
     \end{block}
     \column{5cm}
+    \vspace{-0.5cm}
     \begin{block}{\scriptsize no \bftt{else}}
       \begin{lstlisting}[language={[90]Fortran},basicstyle=\fontsize{6}{5}\selectfont\ttfamily]
 if ( expression ) then
@@ -873,68 +893,6 @@ else if ( expression ) then
 end if
       \end{lstlisting}
     \end{block}
-  \end{columns}
-\end{frame}
-
-\begin{frame}[fragile,allowframebreaks]{Finding roots of quadratic equation}
-  \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{6}{7}\selectfont\ttfamily]{./Exercise/quad_roots.f90}
-  \framebreak
-  \begin{columns}[t]
-    \column{0.5\textwidth}
-    \begin{Verbatim}[fontsize=\fontsize{5}{6}\selectfont,formatcom=\color{indigo}]
-[apacheco@qb4 Exercise] ./root.x 
- ============================================
-  Program to solve a quadratic equation
-     ax^2 + bx + c = 0 
-  If d = b^2 - 4ac >= 0 
-    then solutions are: 
-      (-b +/- sqrt(d) )/2a 
- ============================================
- Enter coefficients a,b and c
-1 2 1
-
-  Quadratic equation to solve is: 
-   1.000x^2 + 2.000x + 1.000 = 0
-
-Both solutions are equal:    -1.000000
-    \end{Verbatim}
-    \begin{Verbatim}[fontsize=\fontsize{5}{6}\selectfont,formatcom=\color{indigo}]
-[apacheco@qb4 Exercise] ./root.x 
- ============================================
-  Program to solve a quadratic equation
-     ax^2 + bx + c = 0 
-  If d = b^2 - 4ac >= 0 
-    then solutions are: 
-      (-b +/- sqrt(d) )/2a 
- ============================================
- Enter coefficients a,b and c
-0 1 2
-
-  Quadratic equation to solve is: 
-   0.000x^2 + 1.000x + 2.000 = 0
-
- Input equation is a Linear equation with 
- Solution: -2.000
-    \end{Verbatim}
-    \column{0.5\textwidth}
-    \begin{Verbatim}[fontsize=\fontsize{5}{6}\selectfont,formatcom=\color{indigo}]
-[apacheco@qb4 Exercise] ./root.x 
- ============================================
-  Program to solve a quadratic equation
-     ax^2 + bx + c = 0 
-  If d = b^2 - 4ac >= 0 
-    then solutions are: 
-      (-b +/- sqrt(d) )/2a 
- ============================================
- Enter coefficients a,b and c
-2 1 1
-
-  Quadratic equation to solve is: 
-    2.000x^2 +  1.000x +  1.000 = 0
-
- Solution is not real
- (-0.250+0.661i) and (-0.250-0.661i)
-    \end{Verbatim}
   \end{columns}
 \end{frame}
 
@@ -1002,6 +960,27 @@ end select
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Exercise}
+  \begin{itemize}
+  \item Solve the quadratic equation $ax^2 + bx + c = 0$
+  \end{itemize}
+    \begin{equation*}
+      x = \frac{-b \pm \sqrt(b^2 - 4ac)}{2a}
+    \end{equation*}
+  \begin{algorithm}[H]
+    \caption{Pseudo Code for Solving Quadratic Equation}
+    \begin{algorithmic}
+      \Program{roots}{}
+      \State read a, b, c from standard input
+      \State $d \gets b^2 + 4ac$
+%      \If {$d > 0$ }
+      \State $x \gets (-b + \sqrt{d})/2a$ and $x \gets (-b -\sqrt{d})/2a$
+%      \EndIf
+      \EndProgram{roots}
+    \end{algorithmic}
+  \end{algorithm}
+\end{frame}
+  
 \subsection{Loops}
 \begin{frame}[fragile,allowframebreaks]{Do Construct}
   \begin{itemize}
@@ -1041,29 +1020,6 @@ end do [do_name]
       \item If the value of \textit{variable} is less than \textit{end}, the \lstfortran{do} loop completes, else repeat steps 2 and 3
     \end{enumerate}
   \end{itemize}
-  \framebreak
-  \begin{columns}[t]
-    \column{5.5cm}
-    \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{5}{6}\selectfont\ttfamily]{./Exercise/factorial1.f90}
-    \column{5.5cm}
-    \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{5}{6}\selectfont\ttfamily]{./Exercise/factorial2.f90}
-  \end{columns}
-  \begin{columns}
-    \column{5.5cm}
-    \begin{Verbatim}[fontsize=\fontsize{5}{6}\selectfont,formatcom=\color{indigo}]
-[apacheco@qb4 Exercise] ./fact1
- Enter an integer < 15 
-10
-  10!=        3628800
-    \end{Verbatim}
-    \column{5.5cm}
-    \begin{Verbatim}[fontsize=\fontsize{5}{6}\selectfont,formatcom=\color{indigo}]
-[apacheco@qb4 Exercise] ./fact2
- Enter an integer < 15 
-10
-  10!!=           3840
-    \end{Verbatim}
-  \end{columns}
 \end{frame}
 
 \begin{frame}[fragile,allowframebreaks]{Do Construct: Nested}
@@ -1185,6 +1141,112 @@ end do finite
     \item If I/O is formatted, then $\star$ is replaced with
     \item[]\lstfortran{fmt=<format specifier>}
   \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Exercise}
+  \begin{itemize}
+  \item In mathematical terms, the sequence $F_n$ of Fibonacci numbers is defined by the recurrence relation
+    \begin{equation*}
+      F_n = F_{n-1} + F_{n-2},
+    \end{equation*}
+    with seed values
+    \begin{equation*}
+      F_0 = 0 ;  F_1 = 1.
+    \end{equation*}
+  \item Calculate the first $n$ Fibonacci Numbers.
+  \end{itemize}
+  \begin{algorithm}[H]
+    \caption{Pseudo Code to calculate sequence of Fibinacci Numbers}
+    \begin{algorithmic}
+      \Program{Fibonacci}{}
+      \State $n \gets$ a number $> 5$
+      \State $f0 \gets 0$, $f1 \gets 1$
+      \Do {$i \gets 2 \cdots n $}
+      \State {$fn \gets f0 + f1$}, {$f0 \gets f1$}, {$fn \gets f1$}
+      \EndDo
+      \EndProgram{Fibonacci}
+    \end{algorithmic}
+  \end{algorithm}
+
+  \framebreak
+
+  \begin{itemize}
+  \item Calculate factorial and double factorial of a number
+  \end{itemize}
+  \begin{algorithm}[H]
+    \caption{Pseudo Code for Factorial}
+    \begin{algorithmic}
+      \Program{Factorial}{}
+      \State $n \gets$ a number
+      \Do {$i \gets n, n-1, n-2 \cdots 1$}
+      \State $f = f * i$
+      \EndDo
+      \EndProgram{Factorial}
+    \end{algorithmic}
+  \end{algorithm}
+
+  \framebreak
+  
+  \begin{itemize}
+  \item In mathematics, the greatest common divisor (gcd) of two or more integers, when at least one of them is not zero, is the largest positive integer that divides the numbers without a remainder.
+  \item Using Euclid's algorithm
+    \begin{align*}
+      gcd(a,0) &= a \\
+      gcd(a,b) &= gcd(b, a\% b)
+    \end{align*}
+  \item In arithmetic and number theory, the least common multiple of two integers a and b is the smallest positive integer that is divisible by both a and b.
+    \begin{equation*}
+      lcm(a,b) = \frac{\mid{}a\cdot{}b\mid}{gcd(a,b)}
+    \end{equation*}
+  \end{itemize}
+  \begin{algorithm}[H]
+    \caption{Pseudo Code to calculate gcd}
+    \begin{algorithmic}
+      \Program{gcdlcm}{}
+      \State $a,b \gets$ two integers
+      \Do{\textbf{while} $b \ne 0$}
+      \State $t\gets v$, $v\gets u\%v$, $u\gets t$
+      \EndDo
+      \State $gcd \gets |u|$
+      \State $lcm \gets |a\cdot{}b|/gcd$
+      \EndProgram{gcdlcm}
+    \end{algorithmic}
+  \end{algorithm}
+
+  \framebreak
+  \begin{itemize}\item {Calculate pi by Numerical Integration} \end{itemize}
+  \begin{columns}
+    \column{5cm}
+    \begin{itemize}
+    \item We know that
+      \begin{align*}
+        \int^1_0 \dfrac{4.0}{(1+x^2)}\, dx = \pi
+      \end{align*}
+    \item So numerically, we can approxiate pi as the sum of a number of rectangles
+      \begin{align*}
+        \sum^N_{i=0}\,F(x_i)\Delta x \approx \pi
+      \end{align*}
+    \item[] \fontsize{4}{5}{ Meadows et al, A ``hands-on'' introduction to OpenMP, SC09 }
+    \end{itemize}
+    \column{5cm}
+    \begin{center}
+      \includegraphics[width=4cm]{./graphics/pi}
+    \end{center}
+  \end{columns}
+  
+  \begin{algorithm}[H]
+    \caption{Pseudo Code for Calculating Pi}
+    \begin{algorithmic}
+      \Function{calculate\_pi}{}
+      \State $step \gets 1/n$
+      \State $sum \gets 0$
+      \Do{$i \gets 0\cdots n$}
+      \State $x \gets (i+0.5)*step; sum \gets sum + 4/(1+x^2)$
+      \EndDo
+      \State $pi \gets sum * step$
+      \EndFunction
+    \end{algorithmic}
+  \end{algorithm}
 \end{frame}
 
 \begin{frame}[fragile,allowframebreaks]{File Operations}
@@ -1315,16 +1377,13 @@ end do finite
   \begin{minipage}{\textwidth}
     \begin{center}
       \scriptsize
-      \begin{tabular}{|c|c|c|l|}
-        \hline
-        Data Type & Edit Descriptor & Examples & Result\\
-        \hline
+      \begin{tabular}{abbf}
+        \rowcolor{lublue}Data Type & Edit Descriptor & Examples & Result\\
         Integer & nIw[.m] & I5.5 & \lstinline[showspaces=true]|00010|\\
         Real\footnote{\tiny For complex variables, use two appropriate real edit descriptors } (floating point) & nFw.d & F12.6 & \lstinline[showspaces=true]|   10.123456|\\
         Real (exponential) & Ew.d[en]\footnote{\tiny en is used when you need more than 2 digits in the exponent as in 100. E15.7e4 to represent $2.3\times10^{1021}$} & E15.8 & \lstinline[showspaces=true]|   0.12345678E1| \\
         Real (engineering) &  ESw.d\footnote{\tiny data is printed in multiples of 1000} & ES12.3 & \lstinline[showspaces=true]|   50.123E-3| \\
         Character & nAw & A12 & \lstinline[showspaces=true]|     Fortran| \\
-        \hline
       \end{tabular}
     \end{center}
   \end{minipage}
@@ -1333,14 +1392,12 @@ end do finite
   \end{itemize}
   \begin{center}
     \scriptsize
-    \begin{tabular}{|c|c|l|}
-      \hline
-      Space & \texttt{n}X & add \texttt{n} spaces \\
-      \multirow{3}{*}{Tabs} & t\texttt{n} & tab to position \texttt{n} \\
-      & tl\texttt{n} & tab left \texttt{n} positions \\
-      & tr\texttt{n} & tab right \texttt{n} positions \\
-      New Line & / & Create a new line record \\
-      \hline
+    \begin{tabular}{ccl}
+      \rowcolor{lulime}Space & \texttt{n}X & add \texttt{n} spaces \\
+      \rowcolor{lulime!50} & t\texttt{n} & tab to position \texttt{n} \\
+      \rowcolor{lulime!50} Tabs & tl\texttt{n} & tab left \texttt{n} positions \\
+      \rowcolor{lulime!50} & tr\texttt{n} & tab right \texttt{n} positions \\
+      \rowcolor{lulime}New Line & / & Create a new line record \\
     \end{tabular}
   \end{center}
 \end{frame}
@@ -1491,44 +1548,7 @@ end do finite
 \end{frame}
 
 \section{Exercise}
-\begin{frame}[allowframebreaks]{Calculate pi by Numerical Integration}
-  \begin{columns}
-    \column{5cm}
-    \begin{itemize}
-      \item We know that
-      \begin{align*}
-        \int^1_0 \dfrac{4.0}{(1+x^2)}\, dx = \pi
-      \end{align*}
-      \item So numerically, we can approxiate pi as the sum of a number of rectangles
-      \begin{align*}
-        \sum^N_{i=0}\,F(x_i)\Delta x \approx \pi
-      \end{align*}
-      \item[] \fontsize{4}{5}{ Meadows et al, A ``hands-on'' introduction to OpenMP, SC09 }
-    \end{itemize}
-    \column{5cm}
-    \begin{center}
-      \includegraphics[width=4cm]{./graphics/pi}
-    \end{center}
-  \end{columns}
-
-  \begin{algorithm}[H]
-    \caption{Pseudo Code for Calculating Pi}
-    \begin{algorithmic}
-        \Function{calculate\_pi}{}
-        \State $step \gets 1/n$
-        \State $sum \gets 0$
-        \Do{$i \gets 0\cdots n$}
-        \State $x \gets (i+0.5)*step; sum \gets sum + 4/(1+x^2)$
-        \EndDo
-        \State $pi \gets sum * step$
-        \EndFunction
-    \end{algorithmic}
-  \end{algorithm}
-\end{frame}
-
-
-
-\begin{frame}{\small SAXPY}
+\begin{frame}{SAXPY}
   \begin{itemize}
     \item SAXPY is a common operation in computations with vector processors included as part of the BLAS routines
     \item[] $y\leftarrow \alpha x + y$

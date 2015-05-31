@@ -9,7 +9,7 @@ else ifeq ($(COMP),ibm)
 	FFLAGS=
 else
 	FC=gfortran
-	FFLAGS=
+	FFLAGS=-g
 endif
 
 OBJS = md-orig.o

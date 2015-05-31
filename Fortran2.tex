@@ -15,7 +15,7 @@
        
 \institute{\href{http://researchcomputing.lehigh.edu}{LTS Research Computing}}
 
-\date{\today}
+\date{June 2, 2015}
      
 \subject{Talks}
 \keywords{Lehigh Research Computing Resources, Fortran Programming}
@@ -1672,6 +1672,115 @@ end type painted_line_type
 \end{frame}
 
 \subsection{Day 1 Exercises}
+
+\begin{frame}{Calculate Area and Circumference}
+  \begin{itemize}
+  \item Write a code to read a radius from standard input and calculate area and circumference of a circle of that radious
+  \end{itemize}
+  \begin{algorithm}[H]
+    \caption{Pseudo code for calculating area and circumference} 
+    \begin{algorithmic}
+      \Program{areacircum}{}
+      \State Define $\pi$
+      \State $r \gets$ some number
+      \State $a = \pi{}r^2$
+      \State $c = 2\pi{}r$
+      \EndProgram{areacircum}
+    \end{algorithmic}
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}{Roots of Quadratic Equation}
+  \begin{itemize}
+  \item Solve the quadratic equation $ax^2 + bx + c = 0$
+  \end{itemize}
+    \begin{equation*}
+      x = \frac{-b \pm \sqrt(b^2 - 4ac)}{2a}
+    \end{equation*}
+    \begin{algorithm}[H]
+      \caption{Pseudo Code for Solving Quadratic Equation}
+      \begin{algorithmic}
+        \Program{roots}{}
+        \State read a, b, c from standard input
+        \State $d \gets b^2 + 4ac$
+        \State $x \gets (-b + \sqrt{d})/2a$ and $x \gets (-b -\sqrt{d})/2a$
+        \EndProgram{roots}
+      \end{algorithmic}
+    \end{algorithm}
+\end{frame}
+
+\begin{frame}{Fibonacci Numbers}
+  \begin{itemize}
+  \item In mathematical terms, the sequence $F_n$ of Fibonacci numbers is defined by the recurrence relation
+    \begin{equation*}
+      F_n = F_{n-1} + F_{n-2},
+    \end{equation*}
+    with seed values
+    \begin{equation*}
+      F_0 = 0 ;  F_1 = 1.
+    \end{equation*}
+  \item Calculate the first $n$ Fibonacci Numbers.
+  \end{itemize}
+  \begin{algorithm}[H]
+    \caption{Pseudo Code to calculate sequence of Fibinacci Numbers}
+    \begin{algorithmic}
+      \Program{Fibonacci}{}
+      \State $n \gets$ a number $> 5$
+      \State $f0 \gets 0$, $f1 \gets 1$
+      \Do {$i \gets 2 \cdots n $}
+      \State {$fn \gets f0 + f1$}, {$f0 \gets f1$}, {$fn \gets f1$}
+      \EndDo
+      \EndProgram{Fibonacci}
+    \end{algorithmic}
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}{Factorial}
+  \begin{itemize}
+  \item Calculate factorial and double factorial of a number
+  \end{itemize}
+  \begin{algorithm}[H]
+    \caption{Pseudo Code for Factorial}
+    \begin{algorithmic}
+      \Program{Factorial}{}
+      \State $n \gets$ a number
+      \Do {$i \gets n, n-1, n-2 \cdots 1$}
+      \State $f = f * i$
+      \EndDo
+      \EndProgram{Factorial}
+    \end{algorithmic}
+  \end{algorithm}
+\end{frame}
+  
+\begin{frame}[allowframebreaks]{Calculate GCD \& LCM}
+  \begin{itemize}
+  \item In mathematics, the greatest common divisor (gcd) of two or more integers, when at least one of them is not zero, is the largest positive integer that divides the numbers without a remainder.
+  \item Using Euclid's algorithm
+    \begin{align*}
+      gcd(a,0) &= a \\
+      gcd(a,b) &= gcd(b, a\% b)
+    \end{align*}
+  \item In arithmetic and number theory, the least common multiple of two integers a and b is the smallest positive integer that is divisible by both a and b.
+    \begin{equation*}
+      lcm(a,b) = \frac{\mid{}a\cdot{}b\mid}{gcd(a,b)}
+    \end{equation*}
+  \end{itemize}
+  \begin{algorithm}[H]
+    \caption{Pseudo Code to calculate gcd}
+    \begin{algorithmic}
+      \Program{gcdlcm}{}
+      \State $a,b \gets$ two integers
+      \Do{\textbf{while} $b \ne 0$}
+      \State $t\gets v$, $v\gets u\%v$, $u\gets t$
+      \EndDo
+      \State $gcd \gets |u|$
+      \State $lcm \gets |a\cdot{}b|/gcd$
+      \EndProgram{gcdlcm}
+    \end{algorithmic}
+  \end{algorithm}
+  
+\end{frame}
+
 \begin{frame}[allowframebreaks]{Calculate pi by Numerical Integration}
   \begin{columns}
     \column{5cm}
@@ -1707,7 +1816,8 @@ end type painted_line_type
   \end{algorithm}
 \end{frame}
 
-\begin{frame}{\small SAXPY}
+
+\begin{frame}{SAXPY}
   \begin{itemize}
     \item SAXPY is a common operation in computations with vector processors included as part of the BLAS routines
     \item[] $y\leftarrow \alpha x + y$
@@ -1757,6 +1867,5 @@ end type painted_line_type
     \end{algorithmic}
   \end{algorithm}
 \end{frame}
-
 \end{document}
 
