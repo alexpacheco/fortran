@@ -3,6 +3,13 @@
 \include{mypreamble}
 \beamertemplateballitem
 
+\newcolumntype{a}{>{\columncolor{lulime}}c}
+\newcolumntype{b}{>{\columncolor{lulime!50}}c}
+\newcolumntype{d}{>{\columncolor{lulime!40}}c}
+\newcolumntype{e}{>{\columncolor{lulime}}l}
+\newcolumntype{f}{>{\columncolor{lulime!50}}l}
+
+
 \hypersetup{
   pdftitle={Modern Fortran}
   pdfauthor={Alexander B. Pacheco, LTS Research Computing, Lehigh University}
@@ -194,6 +201,52 @@ END PROGRAM name
   \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{}
+  \begin{itemize}
+  \item Basic Character Set:
+    \begin{itemize}
+    \item the letters A$\cdots$Z and a$\cdots$z
+    \item the digits 0$\cdots$9
+    \item the underscore character (\_)
+    \item the special characters = \lstinline|: + blank - * / ( ) [ ] , . $ ' ! `` % & ; < > ?|
+    \end{itemize}
+  \item Identifier: name used to identify a variable, procedure, or any other user-defined item.
+    \begin{itemize}
+    \item cannot be longer than 31 characters
+    \item must be composed of letters, digits and underscores
+    \item first character must be a letter
+    \item case insensitive
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{}
+%  \begin{center}
+    \begin{tabular}{ababa}
+      \rowcolor{lublue}\multicolumn{5}{c}{Non I/O Keywords}\\
+      allocatable & allocate & assign & assignment & block data \\
+      call & case & character & common & complex \\
+      contains & continue & cycle & data & deallocate \\
+      default & do & double precision & else & else if \\
+      elsewhere & end block data & end do & end function & end if \\
+      end interface & end module & end program & end select & end subroutine \\
+      end type & end where & entry & equivalence & exit \\
+      external & function & go to & if & implicit \\
+      in & inout & integer & intent & interface \\
+      intrinsic & kind & len & logical & module \\
+      namelist & nullify & only & operator & optional \\
+      out & parameter & pause & pointer & private \\
+      program & public & real & recursive & result \\
+      return & save & select case & stop & subroutine \\
+      target & then & type & type() & use \\
+      Where & While & & & \\
+      \rowcolor{lublue}\multicolumn{5}{c}{I/O Keywords}\\
+      backspace & close & endfile & format & inquire \\
+      open & print & read & rewind & Write \\
+    \end{tabular}
+%  \end{center}
+\end{frame}
+
 \begin{frame}{Simple I/O}
   \begin{itemize}
     \item Any program needs to be able to read input and write output to be useful and portable.
@@ -228,7 +281,7 @@ altair:Exercise apacheco$ gfortran helloworld.f90
 altair:Exercise apacheco$ ./a.out 
  Hello World!
       \end{Verbatim}
-    \item Other compilers available on our clusters are Intel (ifort), Portland Group (pgf90) and IBM XL (xlf90) compilers.
+    \item Other compilers available on our clusters are Intel (ifort) and Portland Group (pgf90) compilers.
     \item[] \Verb[fontsize=\fontsize{7}{8}\selectfont,formatcom=\color{indigo}]|ifort -o helloworld helloworld.f90; ./helloworld|
   \end{itemize}
 \end{frame}
@@ -252,97 +305,82 @@ end program hello
   \end{eblock}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Variables}
+\begin{frame}[fragile]{Fortran Data Types}
   \begin{itemize}
-    \item Variables are the fundamental building blocks of any program.
-    \item In Fortran, a variable name may consist of up to 31 alphanumeric characters and underscores, of which the first character must be a letter.
-    \item There are no reserved words in Fortran.
-    \item However, names must begin with a letter and should not contain a space.
-    \item Allowed names: a, compute\_force, qed123
-    \item Invalid names: 1a, a thing, \$sign
+  \item Fortran provides five intrinsic data types
+    \begin{itemize}
+    \item[] \lstfortran{INTEGER}: exact whole numbers
+    \item[] \lstfortran{REAL}: real, fractional numbers
+    \item[] \lstfortran{COMPLEX}: complex, fractional numbers
+    \item[] \lstfortran{LOGICAL}: boolean values
+    \item[] \lstfortran{CHARACTER}: strings
+    \end{itemize}
+  \item and allows users to define additional types.
+  \item The \lstfortran{REAL} type is a single-precision floating-point number.
+  \item The \lstfortran{COMPLEX} type consists of two reals (most compilers also provide a \lstfortran{DOUBLE COMPLEX} type).
+  \item FORTRAN also provides \lstfortran{DOUBLE PRECISION} data type for double precision \lstfortran{REAL}. This is obsolete but is still found in several programs.
   \end{itemize}
-  \begin{eblock}{Variable Types}
-    \begin{itemize}
-      \item Fortran provides five intrinsic data types
-      \begin{itemize}
-        \item[] \lstfortran{INTEGER}: exact whole numbers
-        \item[] \lstfortran{REAL}: real, fractional numbers
-        \item[] \lstfortran{COMPLEX}: complex, fractional numbers
-        \item[] \lstfortran{LOGICAL}: boolean values
-        \item[] \lstfortran{CHARACTER}: strings
-      \end{itemize}
-      \item and allows users to define additional types.
-      \item The \lstfortran{REAL} type is a single-precision floating-point number.
-      \item The \lstfortran{COMPLEX} type consists of two reals (most compilers also provide a \lstfortran{DOUBLE COMPLEX} type).
-      \item FORTRAN also provides \lstfortran{DOUBLE PRECISION} data type for double precision \lstfortran{REAL}. This is obsolete but is still found in several programs.
-    \end{itemize}
-  \end{eblock}
-  \begin{eblock}{Explicit and Implicit Typing}
-    \begin{itemize}
-      \item For historical reasons, Fortran is capable of implicit typing of variables.
-        \begin{gather*}
-          \underbrace{ABCDEFGH}_{REAL}\overbrace{IJKLMN}^{INTEGER}\underbrace{OPQRSTUVWXYZ}_{REAL}
-        \end{gather*}
-      \item You might come across old FORTRAN program containing \lstfortran{IMPLICIT REAL*8(a-h,o-z)} or \lstfortran{IMPLICIT DOUBLE PRECISION (a-h,o-z)}.
-      \item It is highly recommended to explicitly declare all variable and avoid implict typing using the statement \lstfortran{IMPLICIT NONE}.
-      \item The \lstfortran{IMPLICIT} statement must precede all variable declarations.
-    \end{itemize}
-  \end{eblock}
 \end{frame}
-  
-\begin{frame}[allowframebreaks]{Literal Constants}
+
+\begin{frame}{Explicit and Implicit Typing}
   \begin{itemize}
-    \item Constants are literal representation of a type that are specified by a programmer.
-    \item In Fortran, different constant formats are required for each type.
-    \item[] \lstfortran{Integer}
+  \item For historical reasons, Fortran is capable of implicit typing of variables.
+    \begin{gather*}
+      \underbrace{ABCDEFGH}_{REAL}\overbrace{IJKLMN}^{INTEGER}\underbrace{OPQRSTUVWXYZ}_{REAL}
+    \end{gather*}
+  \item You might come across old FORTRAN program containing \lstfortran{IMPLICIT REAL*8(a-h,o-z)} or \lstfortran{IMPLICIT DOUBLE PRECISION (a-h,o-z)}.
+  \item It is highly recommended to explicitly declare all variable and avoid implict typing using the statement \lstfortran{IMPLICIT NONE}.
+  \item The \lstfortran{IMPLICIT} statement must precede all variable declarations.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Variables}
+  \begin{itemize}
+  \item Variables are the fundamental building blocks of any program.
+  \item A variable is nothing but a name given to a storage area that our programs can manipulate.
+  \item Each variable should have a specific type,
     \begin{itemize}
-      \item Integers are specified by a number without a decimal point,
-      \item may contain an optional sign, and
-      \item not contain commas
-      \item Example
-      \item[] \lstfortran{137}
-      \item[] \lstfortran{-5678}
-      \item[] \lstfortran{900123}
+    \item which determines the size and layout of the variable's memory;
+    \item the range of values that can be stored within that memory; and
+    \item the set of operations that can be applied to the variable.
     \end{itemize}
-    \framebreak
-    \item[] \lstfortran{Real}
+  \item A variable name may consist of up to 31 alphanumeric characters and underscores, of which the first character must be a letter.
+  \item Names must begin with a letter and should not contain a space.
+  \item Allowed names: a, compute\_force, qed123
+  \item Invalid names: 1a, a thing, \$sign
+  \end{itemize}
+  \begin{center}
+    \begin{tabular}{ll}
+      \rowcolor{lublue}Type & Description \\
+      \rowcolor{lulime!50}Integer & It can hold only integer values. \\
+      \rowcolor{lulime}Real & It stores the floating point numbers. \\
+      \rowcolor{lulime!50}Complex & It is used for storing complex numbers. \\
+      \rowcolor{lulime}Logical & It stores logical Boolean values. \\
+      \rowcolor{lulime!50 }Character & It stores characters or strings. \\
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Constants}
+  \begin{itemize}
+  \item The constants refer to the fixed values that the program cannot alter during its execution.
+  \item Constants can be of any of the basic data types
+  \item Literal Constants: has a value but no name
+    \begin{center}
+      \begin{tabular}{ab}
+        \rowcolor{lublue}Type & Example \\
+        Integer constants & 0 1 -1 300 123456789 \\
+        Real constants & 0.0 1.0 -1.0 123.456 7.1E+10 -52.715E-30 \\
+        Complex constants & (0.0, 0.0) (-123.456E+30, 987.654E-29) \\
+        Logical constants & .true. .false. \\
+        Character constants &         "PQR" "a" "\lstinline|23'abc$%#@!|" \\
+      \end{tabular}
+    \end{center}
+  \item Named Constants:
     \begin{itemize}
-      \item Reals (single precision) may be specified by adding a decimal point, or by using scientific notation with the letter {\em e} indicating the exponent.
-      \item Examples
-      \item[] \lstfortran{19.}
-      \item[] \lstfortran{3.14159}
-      \item[] \lstfortran{6.023e23}
-      \item Double precision constants must be specified in the expontent notation with the letter {\em d} indicating the exponent
-      \item Examples
-      \item[] \lstfortran{23d0}
-      \item[] \lstfortran{6.626d-34}
-      \item[] \lstfortran{-3.14159d0}
-    \end{itemize}
-    \framebreak
-    \item[] \lstfortran{Complex}
-    \begin{itemize}
-      \item Complex constants consist of two single-precision constants enclosed in parenthesis.
-      \item The first constant is the real part; the second is the imaginary part.
-      \item Example
-      \item[] \lstfortran{(1.0,0.0)}
-      \item[] \lstfortran{(-2.7e4,5.0)}
-      \item For systems that support double precision complex, the floating point constants must use the {\em d} notation.
-      \item[] \lstfortran{(-2.7d-4,5.d0)}
-    \end{itemize}
-    \item[] \lstfortran{Logical}
-    \begin{itemize}
-      \item Logical constants can take only the value \lstfortran{.True.} or \lstfortran{.FALSE.} with the periods part of the constant.
-    \end{itemize}
-    \framebreak
-    \item[] \lstfortran{Character}
-    \begin{itemize}
-      \footnotesize
-      \item Character constants are specified by enclosing them in single quotes.
-      \item Example
-      \item[] \lstfortran{'This is a character constant'}
-      \item[] \lstfortran{'The value of pi is 3.1415'}
-      \item If an apostrophe is to be part of the constant, it should be represented by a double quote
-      \item[] \lstfortran{'All the world''s a stage'}
+    \item has a value as well as a name.
+    \item should be declared at the beginning of a program or procedure, indicating its name and type.
+    \item are declared with the parameter attribute
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -400,7 +438,7 @@ CHARACTER(LEN=3), DIMENSION(12) :: months
       \end{lstlisting}
     \item In Fortran, arrays can have upto seven dimension.
     \item In contrast to C/C++, Fortran arrays are column major.
-    \item We'll discuss arrays in more details in the Advanced Concepts Tutorials.
+    \item We'll discuss arrays in more details tomorrow.
   \end{itemize}
 \end{frame}
 
@@ -432,16 +470,13 @@ CHARACTER(LEN=3), DIMENSION(12) :: months
   \end{itemize}
   \begin{minipage}{\textwidth}
     \begin{center}
-      \begin{tabular}{|c|c|c|}
-        \hline
-        KIND & Size (Bytes) & Data Type \\
-        \hline
+      \begin{tabular}{abb}
+        \rowcolor{lublue}KIND & Size (Bytes) & Data Type \\
         1 & 1 & integer, logical, character (default) \\
         2 & 2 & integer, logical \\
         4\footnote{\tiny default for all data types except character} & 4 & integer, real, logical, complex \\
         8 & 8 & integer, real, logical, complex \\
         16 & 16 & real, complex \\
-        \hline
       \end{tabular}
     \end{center}
   \end{minipage}
@@ -465,10 +500,10 @@ Kind of real c =  8  with precision = 15  and range = 307
   \end{Verbatim}
 \end{frame}
 
-\begin{frame}{Operators and Expressions}
+\begin{frame}{Operators}
   Fortran defines a number of operations on each data type.
   \begin{columns}[t]
-    \column{0.5\textwidth}
+    \column{0.4\textwidth}
     \begin{eblock}{\scriptsize Arithmetic Operators}
       \begin{itemize}
         \footnotesize
@@ -479,7 +514,7 @@ Kind of real c =  8  with precision = 15  and range = 307
         \item[**]: exponentiation
       \end{itemize}
     \end{eblock}
-    \column{0.5\textwidth}
+    \column{0.4\textwidth}
     \begin{eblock}{\scriptsize Relational Operators (FORTRAN versions)}
       \begin{itemize}
         \footnotesize
@@ -493,7 +528,7 @@ Kind of real c =  8  with precision = 15  and range = 307
     \end{eblock}
   \end{columns}
   \begin{columns}[t]
-    \column{0.5\textwidth}
+    \column{0.4\textwidth}
     \begin{eblock}{\scriptsize Logical Expressions}
       \begin{itemize}
         \footnotesize
@@ -504,7 +539,7 @@ Kind of real c =  8  with precision = 15  and range = 307
         \item[]{\color{lubrown}.NEQV.} exclusive or
       \end{itemize}
     \end{eblock}
-    \column{0.5\textwidth}
+    \column{0.4\textwidth}
     \begin{eblock}{\scriptsize Character Operators}
       \begin{itemize}
         \footnotesize
@@ -514,7 +549,7 @@ Kind of real c =  8  with precision = 15  and range = 307
   \end{columns}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Operator Evaluations}
+\begin{frame}{Operator Evaluations}
   \begin{itemize}
     \item In Fortran, all operator evaluations on variables is carried out from left-to-right.
     \item Arithmetic operators have a highest precedence while logical operators have the lowest precedence
@@ -523,30 +558,26 @@ Kind of real c =  8  with precision = 15  and range = 307
     \item User defined monadic operator has a higher precedence than arithmetic operators, while
     \item dyadic operators has a lowest precedence than logical operators.
   \end{itemize}
-  \begin{block}{{\scriptsize Operator Precedence}}
-    \begin{center}
-      {
-      \begin{tabular}{ccc}
-        Operator & Precedence & Example \\
-        \hline
-        expression in () & Highest & (a+b) \\
-        user-defined monadic & - & .inverse.a \\
-        ** & - & 10**4 \\
-        * or / & - & 10*20 \\
-        monadic + or - & - & -5 \\
-        dyadic + or - & - & 1+5 \\
-        // & - & str1//str2 \\
-        relational operators & - & a > b \\
-        .not. & - & .not.allocated(a) \\
-        .and. & - & a.and.b \\
-        .or. & - & a.or.b \\
-        .eqv. or .neqv. & - & a.eqv.b \\
-        user defined dyadic & Lowest & x.dot.y\\
-        \hline
-      \end{tabular}
-      }
-    \end{center}
-  \end{block}
+\end{frame}
+\begin{frame}{ Operator Precedence}
+  \begin{center}
+    \begin{tabular}{aba}
+      \rowcolor{lublue}Operator & Precedence & Example \\
+      expression in () & Highest & (a+b) \\
+      user-defined monadic & - & .inverse.a \\
+      ** & - & 10**4 \\
+      * or / & - & 10*20 \\
+      monadic + or - & - & -5 \\
+      dyadic + or - & - & 1+5 \\
+      // & - & str1//str2 \\
+      relational operators & - & a > b \\
+      .not. & - & .not.allocated(a) \\
+      .and. & - & a.and.b \\
+      .or. & - & a.or.b \\
+      .eqv. or .neqv. & - & a.eqv.b \\
+      user defined dyadic & Lowest & x.dot.y\\
+    \end{tabular}
+  \end{center}
 \end{frame}
 
 \begin{frame}[fragile]{Expressions}
@@ -606,11 +637,10 @@ do k = 1, 3
   \footnotesize
   \begin{minipage}{\textwidth}
     \begin{center}
-      \begin{tabular}{ccc}
-        Function & Action & Example \\
-        \hline
+      \begin{tabular}{abd}
+        \rowcolor{lublue}Function & Action & Example \\
         INT & conversion to integer & J=INT(X) \\
-        \multirow{2}{*}{REAL} & conversion to real & X=REAL(J) \\
+        REAL & conversion to real & X=REAL(J) \\
         & return real part of complex number & X=REAL(Z) \\
         DBLE\footnote{\tiny use real(x,kind=8) instead} & convert to double precision & X=DBLE(J) \\
         CMPLX & conversion to complex & A=CMPLX(X[,Y]) \\
@@ -625,7 +655,6 @@ do k = 1, 3
         EXP & exponentiation & Y=EXP(X) \\
         LOG & natural logarithm & Y=LOG(X) \\
         LOG10 & logarithm to base 10 & Y=LOG10(X) \\
-        \hline
       \end{tabular}
     \end{center}
   \end{minipage}
@@ -634,9 +663,8 @@ do k = 1, 3
 \begin{frame}{Trignometric Functions}
   \footnotesize
   \begin{center}
-    \begin{tabular}{ccc}
-      Function & Action & Example \\
-      \hline
+    \begin{tabular}{abd}
+      \rowcolor{lublue}Function & Action & Example \\
       SIN & sine & X=SIN(Y) \\
       COS & cosine & X=COS(Y) \\
       TAN & tangent & X=TAN(Y) \\
@@ -647,7 +675,6 @@ do k = 1, 3
       SINH & hyperbolic sine & X=SINH(Y) \\
       COSH & hyperbolic cosine & X=COSH(Y) \\
       TANH & hyperbolic tangent & X=TANH(Y) \\
-      \hline
     \end{tabular}  
   
         {\tiny hyperbolic functions are not defined for complex argument}
@@ -657,22 +684,21 @@ do k = 1, 3
 \begin{frame}{Character Functions}
   \footnotesize
   \begin{center}
-    \begin{tabular}{ll}
-      \hline
+    \begin{tabular}{ef}
+      \rowcolor{lublue}Function & Description \\
       len(c) & length \\
       len\_trim(c) & length of c if it were trimmed \\
       lge(s1,s2) & returns .true. if s1 follows or is equal to s2 in lexical order \\
       lgt(s1,s2) & returns .true. if s1 follows s1 in lexical order \\
       lle(s1,s2) & returns .true. if s2 follows or is equal to s1 in lexical order \\
       llt(s1,s2) & returns .true. if s2 follows s1 in lexical order \\
-      \multirow{2}{*}{adjustl(s)} & returns string with leading blanks removed and \\
+      adjustl(s) & returns string with leading blanks removed and \\
       &   \quad same number of trailing blanks added \\
-      \multirow{2}{*}{adjustr(s)} & returns string with trailing blanks removed and \\
+      adjustr(s) & returns string with trailing blanks removed and \\
       & \quad same number of leading blanks added \\
       repeat(s,n) & concatenates string s to itself n times \\
       scan(s,c) & returns the integer starting position of string c within string s \\
       trim(c) & trim trailing blanks from c \\
-      \hline
     \end{tabular}
   \end{center}
 \end{frame}
@@ -690,41 +716,6 @@ do k = 1, 3
     \item[matmul(x,y)] Matrix Multiplication of arrays x and y which can be 1 or 2 dimensional arrays: $ z_{i,j} = \sum_k x_{i,k} * y_{k,j}$
     \item[conjg(x)] Returns the conjugate of x: $ a + \imath b \Rightarrow a - \imath b$
   \end{description}
-\end{frame}
-
-\section{Program Structure}
-\begin{frame}[fragile,allowframebreaks]
-  \frametitle{Program Structure}
-%  \begin{columns}
-%    \column{0.5\textwidth}
-%    \begin{itemize}
-%      \item A program starts with the keyword \lstfortran{PROGRAM},
-%      \item followed by a program name,
-%      \item followed by the \lstfortran{IMPLICIT NONE} statement,
-%      \item followed by some specification statements,
-%    \end{itemize}
-%    \column{0.4\textwidth}
-    \begin{eblock}{}
-      \begin{lstlisting}[language={[90]Fortran}]
-PROGRAM program-name
-   IMPLICIT NONE
-   [specification part]
-   [execution part]
-   [subprogram part]
-END PROGRAM program-name
-      \end{lstlisting}
-    \end{eblock}
-%  \end{columns}
-  \begin{itemize}
-%    \item followed by the execution part, and a set of internal subprograms,
-%    \item followed by the keywords \lstfortran{END PROGRAM} and the program name.
-    \item All Fortran statements are case insensitive.
-    \item Most programmers use lower case letters with upper case letters reserved for program keywords.
-    \item Are you a FORTRAN 77 or older programmer?
-    \begin{itemize}
-      \item Use the \lstfortran{IMPLICIT NONE} statement, avoid \lstfortran{implicit real*8(a-h,o-z)} statement. Get in the habit of declaring all variables.
-    \end{itemize}
-  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -756,21 +747,16 @@ altair:Exercise apacheco$ ./a.out
     \item In the temperature code, $9/5=1$ and $5/9=0$. Division between integers is an integer with the fractional part truncated.
     \item In the case of operations between mixed variable types, the variable with lower rank is promoted to the highest rank type.
   \end{itemize}
-  \begin{eblock}{}
-    \begin{center}
-      \footnotesize
-      \begin{tabular}{ccc}
-        \hline
-        Variable 1 & Variable 2 & Result \\
-        \hline
-        Integer & Real & Real \\
-        Integer & Complex & Complex \\
-        Real & Double Precision & Double Precision \\
-        Real & Complex & Complex\\
-        \hline
-      \end{tabular}
-    \end{center}
-  \end{eblock}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{abb}
+      \rowcolor{lublue}Variable 1 & Variable 2 & Result \\
+      Integer & Real & Real \\
+      Integer & Complex & Complex \\
+      Real & Double Precision & Double Precision \\
+      Real & Complex & Complex\\
+    \end{tabular}
+  \end{center}
   \framebreak
   \begin{itemize}
     \item As a programmer, you need to make sure that the expressions take type conversion into account
@@ -789,306 +775,6 @@ altair:Exercise apacheco$ ./a.out
     \item 10, 40 and 32 should be written as real numbers (10., 40. and 32.) to stay consistent. 
   \end{itemize}
 \end{frame}
-
-\section{Input and Output}
-\begin{frame}[fragile,allowframebreaks]
-  \frametitle{Input and Output Descriptors}
-  \begin{itemize}
-    \item Input and output are accomplished by operations on files.
-    \item Files are identified by some form of file handle, in Fortran called the \textbf{unit number}.
-    \item We have already encountered read and write command such as \lstfortran{print *,} and \lstfortran{read *,}
-    \item Alternative commands for read and write are 
-    \item[] \lstfortran{read(unit,*)}
-    \item[] \lstfortran{write(unit,*)}
-    \item There is no comma after the ')'. FORTRAN allowed statements of the form \lstfortran{write(unit,*),} which is not supported on some compilers such as IBM XLF. Please avoid this notation in FORTRAN programs.
-    \item The default unit number 5 is associated with the standard input, and
-    \item unit number 6 is assigned to standard output.
-    \item You can replace \lstfortran{unit} with $\star$ in which case standard input (5) and output (6) file descriptors are used.
-    \item The second $\star$ in \lstfortran{read/write} or the one in the \lstfortran{print */read *} corresponds to unformatted input/output.
-    \item If I/O is formatted, then $\star$ is replaced with
-    \item[]\lstfortran{fmt=<format specifier>}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile,allowframebreaks]{File Operations}
-  \begin{itemize}
-    \item A file may be opened with the statement
-    \item[]\lstfortran{OPEN([UNIT=]un, FILE=fname [, options])}
-    \item Commonly used options for the open statement are:
-    \item[]\lstfortran{IOSTAT=ios}: This option returns an integer ios; its value is zero if the statement executed without error, and nonzero if an error occured.
-    \item[]\lstfortran{ERR=label}: label is the label of a statement in the same program unit. In the event of an error, execution is transferred to this labelled statement. 
-    \item[]\lstfortran{STATUS=istat}: This option indicates the type of file to be opened. Possible values are:
-      \begin{itemize}
-        \item[old]: the file specified by the file parameter must exist. 
-        \item[new]: the file will be created and must not exist. 
-        \item[replace]: the file will be created if it does not exist or if it exists, the file will be deleted and created i.e. contents overwritten.
-        \item[unknown]: the file will be created if it doesn't exist or opened if it exists without further processing.
-        \item[scratch]: file will exist until the termination of the executing program or until a \lstfortran{close} is executed on that unit.
-      \end{itemize}
-    \item[] \lstfortran{position=todo}: This options specifies the position where the read/write marker should be placed when opened. Possible values are:
-      \begin{itemize}
-        \item[rewind]: positions the file at its initial point. Convenient for rereading data from file such as input parameters.
-        \item[append]: positions the file just before the endfile record. Convenient while writing to a file that already exists. If the file is \texttt{new}, then the position is at its initial point.
-      \end{itemize}
-      \framebreak
-    \item The status of a file may be tested at any point in a program by means of the \lstfortran{INQUIRE} statement.
-    \item[] \lstfortran{INQUIRE([UNIT=]un, options)}
-    \item[OR]
-    \item[] \lstfortran{INQUIRE(FILE=fname, options)}
-    \item At least one option must be specified. Options include
-    \item[] \lstfortran{IOSTAT=ios}: Same use as \lstfortran{open} statement.
-    \item[] \lstfortran{EXIST=lex}: Returns whether the file exists in the logical variable \lstfortran{lex}
-    \item[] \lstfortran{OPENED=Iop}: Returns whether the file is open in the logical variable \lstfortran{Iop}
-    \item[] \lstfortran{NUMBER=num}: Returns the unit number associated with the file, or -1 if no number is assigned to it. Generally used with the second form of the \lstfortran{INQUIRE} statement.
-    \item[] \lstfortran{NAMED=isnamed}: Returns whether the file has a name. Generally used with the first form of the \lstfortran{INQUIRE} statement.
-    \item[] \lstfortran{NAME=fname}: Returns the name of the file in the character variable \lstfortran{fname}. Used in conjunction with the \lstfortran{NAMED} option.
-    \item[] \lstfortran{READ=rd}: Returns a string \lstfortran{YES, NO}, or \lstfortran{UNKNOWN} to the character variable \lstfortran{rd} depending on whether the file is readable. If status cannot be determined, it returns \lstfortran{UNKNOWN}.
-    \item[] \lstfortran{WRITE=wrt}: Similar to the \lstfortran{READ} option to test if a file is writable.
-    \item[] \lstfortran{READWRITE=rdwrt}: Similar to the \lstfortran{READ} option to test if a file is both readable and writeable.
-      \framebreak
-    \item A file may be closed with the statement
-    \item[]\lstfortran{CLOSE([UNIT=]un [, options])}
-    \item Commonly used options for the close statement are:
-    \item[] \lstfortran{IOSTAT=ios}: Same use as \lstfortran{open} statement.
-    \item[] \lstfortran{ERR=label}: Same use as \lstfortran{open} statement.
-    \item[] \lstfortran{STATUS=todo}: What actions needs to be performed on the file while closing it. Possible values are
-      \begin{itemize}
-        \item[keep]: file will continue to exist after the close statement, default option except for scratch files.
-        \item[delete]: file will cease to exist after the close statement, default option for scratch files.
-      \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile,allowframebreaks]{Reading and Writing Data}
-  \begin{itemize}
-    \item The \lstfortran{WRITE} statement is used to write to a file.
-    \item Syntax for writing a list of variable, \lstfortran{varlist}, to a file associated with unit number \lstfortran{un} 
-    \item[] \lstfortran{WRITE(un, options) varlist}
-    \item The most common options for \lstfortran{WRITE} are:
-    \item[] \lstfortran{FMT=label} A format statement label specifier.
-    \item[] You can also specify the exact format to write the data to be discussed in a few slides.
-    \item[] \lstfortran{IOSTAT=ios} Returns an integer indicating success or failure; zero if statement executed with no erros and nonzero if an error occured.
-    \item[] \lstfortran{ERR=label} The label is a statement label to which the program should jump if an error occurs.
-    \item The \lstfortran{READ} statement is used to read from a file.
-    \item Syntax for reading a list of variable, \lstfortran{varlist}, to a file associated with unit number \lstfortran{un}
-    \item[] \lstinline[language={[90]Fortran}]|READ(un, options) varlist|
-    \item Options to the \lstfortran{READ} statement are the same as that of the \lstfortran{WRITE} statement with one additional option,
-    \item[] \lstfortran{END=label} The label is a statement label to which the program should jump if the end of file is detected.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile,allowframebreaks]{List-Directed I/O}
-  \begin{itemize}
-    \item The simplest method of getting data into and out of a program is list-directed I/O.
-    \item The data is read or written as a stream into or from specified variables either from standard input or output or from a file.
-    \item The unit number associate with standard input is 5 while standard output is 6.
-    \item If data is read/written from/to standard input/output, then
-      \begin{itemize}
-        \item the unit number, \lstfortran{un} can also be replaced with $\ast$,
-        \item use alternate form for reading and writing i.e. the \lstfortran{read *,} and \lstfortran{print *,} covered in an earlier slide.
-        \item If data is unformatted i.e. plain ASCII characters, the option to \lstfortran{write} and \lstfortran{read} command is $\ast$
-      \end{itemize}
-    \item Example of list-directed output to standard output or to a file associated with unit number 8
-      \begin{lstlisting}[language={[90]Fortran}]
-  print *, a, b, c, arr
-  write(*,*) a, b, arr
-  write(6,*) a, b, c, arr
-  write(8,*) a, b, c, &
-    arr
-      \end{lstlisting}
-    \item Unlike C/C++, Fortran always writes an end-of-line marker at the end of the list of item for any \lstfortran{print} or \lstfortran{write} statements.
-    \item Printing a long line with many variables may thus require continuations.
-    \item Example of list-directed input from standard output or to a file associated with unit number 8
-      \begin{lstlisting}[language={[90]Fortran}]
-  read *, a, b, c, arr
-  read(*,*) a, b, c, arr
-  read(5,*) a, b, c, arr
-  read(8,*) a, b, c, arr
-      \end{lstlisting}
-    \item When reading from standard input, the program will wait for a response from the console.
-    \item Unless explicitly told to do so, no prompts to enter data will be printed. Very often programmers use a print statement to let you know that a response is expected.
-      \begin{lstlisting}[language={[90]Fortran}]
- print *, 'Please enter a value for the variable inp'
- read *, inp
-      \end{lstlisting}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile,allowframebreaks]{Formatted Input/Output}
-  \begin{itemize}
-    \item List-directed I/O does not always print the results in a particularly readable form.
-    \item For example, a long list of variable printed to a file or console may be broken up into multiple lines.
-    \item In such cases it is desirable to have more control over the format of the data to be read or written.
-    \item Formatted I/O requires that the programmer control the layout of the data.
-    \item The type of data and the number of characters that each element may occupy must be specified.
-      \framebreak
-    \item A formatted data description must adhere to the generic form,
-    \item[] \lstfortran{nCw.d}
-    \item[] where
-      \begin{itemize}
-        \item \lstfortran{n} is an integer constant that specifies the number of repititions (default 1 can be omitted),
-        \item \lstfortran{C} is a letter indicating the type of the data variable to be written or read,
-        \item \lstfortran{w} is the total number of spaces allocated to this variable, and,
-        \item \lstfortran{d} is the number of spaces allocated to the fractional part of the variable. Integers are padded with zeros for a total width of \lstfortran{w} provided $d\le w$.
-        \item The decimal (.) and \lstfortran{d} designator are not used for integers, characters or logical data types. Note that \lstfortran{d} designator has a different meaning for integers and is usually referred to as \lstfortran{m} to avoid confusion.
-      \end{itemize}
-    \item Collectively, these designators are called \textbf{edit descriptors}.
-    \item The space occupied by an item of data or variable is called \textit{field}.
-  \end{itemize}
-  \begin{minipage}{\textwidth}
-    \begin{center}
-      \scriptsize
-      \begin{tabular}{|c|c|c|l|}
-        \hline
-        Data Type & Edit Descriptor & Examples & Result\\
-        \hline
-        Integer & nIw[.m] & I5.5 & \lstinline[showspaces=true]|00010|\\
-        Real\footnote{\tiny For complex variables, use two appropriate real edit descriptors } (floating point) & nFw.d & F12.6 & \lstinline[showspaces=true]|   10.123456|\\
-        Real (exponential) & Ew.d[en]\footnote{\tiny en is used when you need more than 2 digits in the exponent as in 100. E15.7e4 to represent $2.3\times10^{1021}$} & E15.8 & \lstinline[showspaces=true]|   0.12345678E1| \\
-        Real (engineering) &  ESw.d\footnote{\tiny data is printed in multiples of 1000} & ES12.3 & \lstinline[showspaces=true]|   50.123E-3| \\
-        Character & nAw & A12 & \lstinline[showspaces=true]|     Fortran| \\
-        \hline
-      \end{tabular}
-    \end{center}
-  \end{minipage}
-  \begin{itemize}
-    \item \textbf{Control descriptors} alter the input or output by addings blanks, new lines and tabs.
-  \end{itemize}
-  \begin{center}
-    \scriptsize
-    \begin{tabular}{|c|c|l|}
-      \hline
-      Space & \texttt{n}X & add \texttt{n} spaces \\
-      \multirow{3}{*}{Tabs} & t\texttt{n} & tab to position \texttt{n} \\
-      & tl\texttt{n} & tab left \texttt{n} positions \\
-      & tr\texttt{n} & tab right \texttt{n} positions \\
-      New Line & / & Create a new line record \\
-      \hline
-    \end{tabular}
-  \end{center}
-\end{frame}
-
-\begin{frame}[fragile,allowframebreaks]{Format Statements}
-  \begin{itemize}
-    \item Edit descriptors must be used in conjunction with a \lstfortran{PRINT}, \lstfortran{WRITE} or \lstfortran{READ} statement.
-    \item In the simplest form, the format is enclosed in single quotes and parentheses as as argument to the keyword.
-      \begin{lstlisting}[language={[90]Fortran}]
- print '(I5,5F12.6)', i, a, b, c, z ! complex z
- write(6,'(2E15.8)') arr1, arr2
- read(5,'(2a)') firstname, lastname
-      \end{lstlisting}
-      \item If the same format is to be used repeatedly or it is complicated, the \lstfortran{FORMAT} statement can be used.
-      \item The \lstfortran{FORMAT} statement must be labeled and the label is used in the input/output statement to reference it
-        \begin{lstlisting}[language={[90]Fortran}]
- label FORMAT(formlist)
- PRINT label, varlist
- WRITE(un, label) varlist
- READ(un, label) varlist
-        \end{lstlisting}
-      \item The \lstfortran{FORMAT} statements can occur anywhere in the same program unit. Most programmers list all \lstfortran{FORMAT} statements immediately after the type declarations before any executable statements.
-        \begin{lstlisting}[language={[90]Fortran}]
- 10 FORMAT(I5,5F12.6)
- 20 FORMAT(2E15.8)
- 100 FORMAT(2a)
- 
- print 10, i, a, b, c, z ! complex z
- write(6,20) arr1, arr2
- read(5,100) firstname, lastname
-        \end{lstlisting}
-  \end{itemize}
-%  \lstinline[language={[90]Fortran}]|print '(20X,I5,20X,I5/21X,I4,21X,I4)', N, M, I, J|
-%  \lstinline[showspaces=true]|                    12345                    12345|
-%  \lstinline[showspaces=true]|                     1234                     1234| 
-\end{frame}
-
-\begin{frame}[fragile,allowframebreaks]{Namelist}
-  \begin{itemize}
-    \item Many scientific codes have a large number of input parameters.
-    \item Remembering which parameter is which and also the order in which they are to read, make creating input files very tedious.
-    \item Fortran provides \lstfortran{NAMELIST} input simplify this situation.
-    \item In a \lstfortran{NAMELIST}, parameters are specified by name and value and can appear in any order.
-    \item The \lstfortran{NAMELIST} is declared as a non-executable statement in the subprogram that reads the input and the variables that can be specified in it are listed.\\
-      \lstfortran{NAMELIST /name/ varlist}
-    \item Namelists are read with a special form of the \lstfortran{READ} statement.\\
-      \lstfortran{READ(un,[nml=]name)}
-      \framebreak
-    \item The input file must follow a particular format:
-      \begin{itemize}
-        \item begin with an ampersand followed by the name of the namelist (\&name) and ends with a slash (/),
-        \item variables are specified with an equals sign (=) between the variable name and its value,
-        \item only statis objects may be part of a namelist; i.e. dynamically allocated arrays, pointers and the like are not permitted
-      \end{itemize}
-    \item For example, consider a program that declares a namelist as follows:\\
-      \lstfortran{namelist/moldyn/natom,npartdim,tempK,nstep,dt}
-    \item The corresponding input file can take the form
-      \lstinputlisting{./Exercise/MolDyn/orig/md.inp}
-    \item Note:
-      \begin{itemize}
-        \item parameters may appear in any order in the input file, and
-        \item may be omitted if they are not needed i.e. they can take default values that is specified in the program
-      \end{itemize}
-    \item The above namelist can be read with a single statement as in (other options to \lstfortran{READ} statement can be added if needed)\\
-      \lstfortran{READ(10, nml=moldyn)}
-    \item To write the values of a namelist is similar\\
-      \lstfortran{WRITE(20, nml=moldyn)}
-    \item Namelist names and variables are case insensitive.
-    \item The namelist designator cannot have blanks
-    \item Arrays may be namelist variables, but all the values of the array must be listed after the equals sign following its name
-    \item If any variable name is repeated, the final value is taken.
-    \item Namelist are convenient when you want to read different input for different types of calculations within the same program.
-    \item Amber Molecular Dynamics package uses namelist to read input. The following is the input file from Amber's test directory.
-      \begin{lstlisting}
- &cntrl 
-   ntx=1, imin=5, ipb=1, inp=2, ntb=0,  
- /      
- &pb
-   npbverb=0, istrng=0, epsout=80.0, epsin=1.0, space=0.5,  
-   accept=0.001, sprob=1.6, radiopt=1, dprob=1.6,   
- /      
-      \end{lstlisting}
-    \item If multiple variables are listed on the same line, they need to be separated by a comma (,) not semicolon(;)
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile,allowframebreaks]{Internal Read and Write}
-  \begin{itemize}
-    \item Fortran allows a programmer to cast numeric types to character type and vice versa.
-    \item The character variable functions as an internal file.
-    \item An \textbf{internal write} converts from numeric to character type, while
-    \item an \textbf{internal read} converts from character to numeric type.
-    \item This is useful feature particularly for writing output of arrays that are dynamically allocated.
-    \item Example: Convert an integer to a character
-      \begin{lstlisting}[language={[90]Fortran}]
- CHARACTER(len=10) :: num
- INTEGER           :: inum
- WRITE(NUM,'(A10)') inum
-      \end{lstlisting}
-      \framebreak
-    \item Example: Convert an character to an integer
-      \begin{lstlisting}[language={[90]Fortran}]
- CHARACTER(len=10) :: num = "435"
- INTEGER   :: inum
- READ(inum,'(I4)') num
-      \end{lstlisting}
-    \item Example: Writing data when parameters are not known at compile time
-      \begin{lstlisting}[language={[90]Fortran}]
- CHARACTER(len=23) :: xx
- CHARACTER(len=13) :: outfile
- INTEGER  :: natoms, istep
- REAL     :: time
- REAL, ALLOCATABLE, DIMENSION(:) :: coords
-
- natoms = 100 ; ALLOCATE(coords(natoms*3))
-
- WRITE(xx,'(A,I5,A)') '(F12.6,', 3*natoms, '(2X,E15.8))'
- WRITE(outfile,'(A8,I5.5,A4)') 'myoutput', istep, '.dat'
-
- OPEN(unit = 10, file = outfile)
- WRITE(10, xx) time, coords(:)
-      \end{lstlisting}
-  \end{itemize}
-\end{frame}
-
 
 \section{Control Constructs}
 \begin{frame}[fragile] {Control Constructs}
@@ -1478,6 +1164,306 @@ finite: do
 end do finite
     \end{lstlisting}
   \end{columns}
+\end{frame}
+
+
+\section{Input and Output}
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{Input and Output Descriptors}
+  \begin{itemize}
+    \item Input and output are accomplished by operations on files.
+    \item Files are identified by some form of file handle, in Fortran called the \textbf{unit number}.
+    \item We have already encountered read and write command such as \lstfortran{print *,} and \lstfortran{read *,}
+    \item Alternative commands for read and write are 
+    \item[] \lstfortran{read(unit,*)}
+    \item[] \lstfortran{write(unit,*)}
+    \item There is no comma after the ')'. FORTRAN allowed statements of the form \lstfortran{write(unit,*),} which is not supported on some compilers such as IBM XLF. Please avoid this notation in FORTRAN programs.
+    \item The default unit number 5 is associated with the standard input, and
+    \item unit number 6 is assigned to standard output.
+    \item You can replace \lstfortran{unit} with $\star$ in which case standard input (5) and output (6) file descriptors are used.
+    \item The second $\star$ in \lstfortran{read/write} or the one in the \lstfortran{print */read *} corresponds to unformatted input/output.
+    \item If I/O is formatted, then $\star$ is replaced with
+    \item[]\lstfortran{fmt=<format specifier>}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{File Operations}
+  \begin{itemize}
+    \item A file may be opened with the statement
+    \item[]\lstfortran{OPEN([UNIT=]un, FILE=fname [, options])}
+    \item Commonly used options for the open statement are:
+    \item[]\lstfortran{IOSTAT=ios}: This option returns an integer ios; its value is zero if the statement executed without error, and nonzero if an error occured.
+    \item[]\lstfortran{ERR=label}: label is the label of a statement in the same program unit. In the event of an error, execution is transferred to this labelled statement. 
+    \item[]\lstfortran{STATUS=istat}: This option indicates the type of file to be opened. Possible values are:
+      \begin{itemize}
+        \item[old]: the file specified by the file parameter must exist. 
+        \item[new]: the file will be created and must not exist. 
+        \item[replace]: the file will be created if it does not exist or if it exists, the file will be deleted and created i.e. contents overwritten.
+        \item[unknown]: the file will be created if it doesn't exist or opened if it exists without further processing.
+        \item[scratch]: file will exist until the termination of the executing program or until a \lstfortran{close} is executed on that unit.
+      \end{itemize}
+    \item[] \lstfortran{position=todo}: This options specifies the position where the read/write marker should be placed when opened. Possible values are:
+      \begin{itemize}
+        \item[rewind]: positions the file at its initial point. Convenient for rereading data from file such as input parameters.
+        \item[append]: positions the file just before the endfile record. Convenient while writing to a file that already exists. If the file is \texttt{new}, then the position is at its initial point.
+      \end{itemize}
+      \framebreak
+    \item The status of a file may be tested at any point in a program by means of the \lstfortran{INQUIRE} statement.
+    \item[] \lstfortran{INQUIRE([UNIT=]un, options)}
+    \item[OR]
+    \item[] \lstfortran{INQUIRE(FILE=fname, options)}
+    \item At least one option must be specified. Options include
+    \item[] \lstfortran{IOSTAT=ios}: Same use as \lstfortran{open} statement.
+    \item[] \lstfortran{EXIST=lex}: Returns whether the file exists in the logical variable \lstfortran{lex}
+    \item[] \lstfortran{OPENED=Iop}: Returns whether the file is open in the logical variable \lstfortran{Iop}
+    \item[] \lstfortran{NUMBER=num}: Returns the unit number associated with the file, or -1 if no number is assigned to it. Generally used with the second form of the \lstfortran{INQUIRE} statement.
+    \item[] \lstfortran{NAMED=isnamed}: Returns whether the file has a name. Generally used with the first form of the \lstfortran{INQUIRE} statement.
+    \item[] \lstfortran{NAME=fname}: Returns the name of the file in the character variable \lstfortran{fname}. Used in conjunction with the \lstfortran{NAMED} option.
+    \item[] \lstfortran{READ=rd}: Returns a string \lstfortran{YES, NO}, or \lstfortran{UNKNOWN} to the character variable \lstfortran{rd} depending on whether the file is readable. If status cannot be determined, it returns \lstfortran{UNKNOWN}.
+    \item[] \lstfortran{WRITE=wrt}: Similar to the \lstfortran{READ} option to test if a file is writable.
+    \item[] \lstfortran{READWRITE=rdwrt}: Similar to the \lstfortran{READ} option to test if a file is both readable and writeable.
+      \framebreak
+    \item A file may be closed with the statement
+    \item[]\lstfortran{CLOSE([UNIT=]un [, options])}
+    \item Commonly used options for the close statement are:
+    \item[] \lstfortran{IOSTAT=ios}: Same use as \lstfortran{open} statement.
+    \item[] \lstfortran{ERR=label}: Same use as \lstfortran{open} statement.
+    \item[] \lstfortran{STATUS=todo}: What actions needs to be performed on the file while closing it. Possible values are
+      \begin{itemize}
+        \item[keep]: file will continue to exist after the close statement, default option except for scratch files.
+        \item[delete]: file will cease to exist after the close statement, default option for scratch files.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{Reading and Writing Data}
+  \begin{itemize}
+    \item The \lstfortran{WRITE} statement is used to write to a file.
+    \item Syntax for writing a list of variable, \lstfortran{varlist}, to a file associated with unit number \lstfortran{un} 
+    \item[] \lstfortran{WRITE(un, options) varlist}
+    \item The most common options for \lstfortran{WRITE} are:
+    \item[] \lstfortran{FMT=label} A format statement label specifier.
+    \item[] You can also specify the exact format to write the data to be discussed in a few slides.
+    \item[] \lstfortran{IOSTAT=ios} Returns an integer indicating success or failure; zero if statement executed with no erros and nonzero if an error occured.
+    \item[] \lstfortran{ERR=label} The label is a statement label to which the program should jump if an error occurs.
+    \item The \lstfortran{READ} statement is used to read from a file.
+    \item Syntax for reading a list of variable, \lstfortran{varlist}, to a file associated with unit number \lstfortran{un}
+    \item[] \lstinline[language={[90]Fortran}]|READ(un, options) varlist|
+    \item Options to the \lstfortran{READ} statement are the same as that of the \lstfortran{WRITE} statement with one additional option,
+    \item[] \lstfortran{END=label} The label is a statement label to which the program should jump if the end of file is detected.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{List-Directed I/O}
+  \begin{itemize}
+    \item The simplest method of getting data into and out of a program is list-directed I/O.
+    \item The data is read or written as a stream into or from specified variables either from standard input or output or from a file.
+    \item The unit number associate with standard input is 5 while standard output is 6.
+    \item If data is read/written from/to standard input/output, then
+      \begin{itemize}
+        \item the unit number, \lstfortran{un} can also be replaced with $\ast$,
+        \item use alternate form for reading and writing i.e. the \lstfortran{read *,} and \lstfortran{print *,} covered in an earlier slide.
+        \item If data is unformatted i.e. plain ASCII characters, the option to \lstfortran{write} and \lstfortran{read} command is $\ast$
+      \end{itemize}
+    \item Example of list-directed output to standard output or to a file associated with unit number 8
+      \begin{lstlisting}[language={[90]Fortran}]
+  print *, a, b, c, arr
+  write(*,*) a, b, arr
+  write(6,*) a, b, c, arr
+  write(8,*) a, b, c, &
+    arr
+      \end{lstlisting}
+    \item Unlike C/C++, Fortran always writes an end-of-line marker at the end of the list of item for any \lstfortran{print} or \lstfortran{write} statements.
+    \item Printing a long line with many variables may thus require continuations.
+    \item Example of list-directed input from standard output or to a file associated with unit number 8
+      \begin{lstlisting}[language={[90]Fortran}]
+  read *, a, b, c, arr
+  read(*,*) a, b, c, arr
+  read(5,*) a, b, c, arr
+  read(8,*) a, b, c, arr
+      \end{lstlisting}
+    \item When reading from standard input, the program will wait for a response from the console.
+    \item Unless explicitly told to do so, no prompts to enter data will be printed. Very often programmers use a print statement to let you know that a response is expected.
+      \begin{lstlisting}[language={[90]Fortran}]
+ print *, 'Please enter a value for the variable inp'
+ read *, inp
+      \end{lstlisting}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{Formatted Input/Output}
+  \begin{itemize}
+    \item List-directed I/O does not always print the results in a particularly readable form.
+    \item For example, a long list of variable printed to a file or console may be broken up into multiple lines.
+    \item In such cases it is desirable to have more control over the format of the data to be read or written.
+    \item Formatted I/O requires that the programmer control the layout of the data.
+    \item The type of data and the number of characters that each element may occupy must be specified.
+      \framebreak
+    \item A formatted data description must adhere to the generic form,
+    \item[] \lstfortran{nCw.d}
+    \item[] where
+      \begin{itemize}
+        \item \lstfortran{n} is an integer constant that specifies the number of repititions (default 1 can be omitted),
+        \item \lstfortran{C} is a letter indicating the type of the data variable to be written or read,
+        \item \lstfortran{w} is the total number of spaces allocated to this variable, and,
+        \item \lstfortran{d} is the number of spaces allocated to the fractional part of the variable. Integers are padded with zeros for a total width of \lstfortran{w} provided $d\le w$.
+        \item The decimal (.) and \lstfortran{d} designator are not used for integers, characters or logical data types. Note that \lstfortran{d} designator has a different meaning for integers and is usually referred to as \lstfortran{m} to avoid confusion.
+      \end{itemize}
+    \item Collectively, these designators are called \textbf{edit descriptors}.
+    \item The space occupied by an item of data or variable is called \textit{field}.
+  \end{itemize}
+  \begin{minipage}{\textwidth}
+    \begin{center}
+      \scriptsize
+      \begin{tabular}{|c|c|c|l|}
+        \hline
+        Data Type & Edit Descriptor & Examples & Result\\
+        \hline
+        Integer & nIw[.m] & I5.5 & \lstinline[showspaces=true]|00010|\\
+        Real\footnote{\tiny For complex variables, use two appropriate real edit descriptors } (floating point) & nFw.d & F12.6 & \lstinline[showspaces=true]|   10.123456|\\
+        Real (exponential) & Ew.d[en]\footnote{\tiny en is used when you need more than 2 digits in the exponent as in 100. E15.7e4 to represent $2.3\times10^{1021}$} & E15.8 & \lstinline[showspaces=true]|   0.12345678E1| \\
+        Real (engineering) &  ESw.d\footnote{\tiny data is printed in multiples of 1000} & ES12.3 & \lstinline[showspaces=true]|   50.123E-3| \\
+        Character & nAw & A12 & \lstinline[showspaces=true]|     Fortran| \\
+        \hline
+      \end{tabular}
+    \end{center}
+  \end{minipage}
+  \begin{itemize}
+    \item \textbf{Control descriptors} alter the input or output by addings blanks, new lines and tabs.
+  \end{itemize}
+  \begin{center}
+    \scriptsize
+    \begin{tabular}{|c|c|l|}
+      \hline
+      Space & \texttt{n}X & add \texttt{n} spaces \\
+      \multirow{3}{*}{Tabs} & t\texttt{n} & tab to position \texttt{n} \\
+      & tl\texttt{n} & tab left \texttt{n} positions \\
+      & tr\texttt{n} & tab right \texttt{n} positions \\
+      New Line & / & Create a new line record \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{Format Statements}
+  \begin{itemize}
+    \item Edit descriptors must be used in conjunction with a \lstfortran{PRINT}, \lstfortran{WRITE} or \lstfortran{READ} statement.
+    \item In the simplest form, the format is enclosed in single quotes and parentheses as as argument to the keyword.
+      \begin{lstlisting}[language={[90]Fortran}]
+ print '(I5,5F12.6)', i, a, b, c, z ! complex z
+ write(6,'(2E15.8)') arr1, arr2
+ read(5,'(2a)') firstname, lastname
+      \end{lstlisting}
+      \item If the same format is to be used repeatedly or it is complicated, the \lstfortran{FORMAT} statement can be used.
+      \item The \lstfortran{FORMAT} statement must be labeled and the label is used in the input/output statement to reference it
+        \begin{lstlisting}[language={[90]Fortran}]
+ label FORMAT(formlist)
+ PRINT label, varlist
+ WRITE(un, label) varlist
+ READ(un, label) varlist
+        \end{lstlisting}
+      \item The \lstfortran{FORMAT} statements can occur anywhere in the same program unit. Most programmers list all \lstfortran{FORMAT} statements immediately after the type declarations before any executable statements.
+        \begin{lstlisting}[language={[90]Fortran}]
+ 10 FORMAT(I5,5F12.6)
+ 20 FORMAT(2E15.8)
+ 100 FORMAT(2a)
+ 
+ print 10, i, a, b, c, z ! complex z
+ write(6,20) arr1, arr2
+ read(5,100) firstname, lastname
+        \end{lstlisting}
+  \end{itemize}
+%  \lstinline[language={[90]Fortran}]|print '(20X,I5,20X,I5/21X,I4,21X,I4)', N, M, I, J|
+%  \lstinline[showspaces=true]|                    12345                    12345|
+%  \lstinline[showspaces=true]|                     1234                     1234| 
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{Namelist}
+  \begin{itemize}
+    \item Many scientific codes have a large number of input parameters.
+    \item Remembering which parameter is which and also the order in which they are to read, make creating input files very tedious.
+    \item Fortran provides \lstfortran{NAMELIST} input simplify this situation.
+    \item In a \lstfortran{NAMELIST}, parameters are specified by name and value and can appear in any order.
+    \item The \lstfortran{NAMELIST} is declared as a non-executable statement in the subprogram that reads the input and the variables that can be specified in it are listed.\\
+      \lstfortran{NAMELIST /name/ varlist}
+    \item Namelists are read with a special form of the \lstfortran{READ} statement.\\
+      \lstfortran{READ(un,[nml=]name)}
+      \framebreak
+    \item The input file must follow a particular format:
+      \begin{itemize}
+        \item begin with an ampersand followed by the name of the namelist (\&name) and ends with a slash (/),
+        \item variables are specified with an equals sign (=) between the variable name and its value,
+        \item only statis objects may be part of a namelist; i.e. dynamically allocated arrays, pointers and the like are not permitted
+      \end{itemize}
+    \item For example, consider a program that declares a namelist as follows:\\
+      \lstfortran{namelist/moldyn/natom,npartdim,tempK,nstep,dt}
+    \item The corresponding input file can take the form
+      \lstinputlisting{./Exercise/MolDyn/orig/md.inp}
+    \item Note:
+      \begin{itemize}
+        \item parameters may appear in any order in the input file, and
+        \item may be omitted if they are not needed i.e. they can take default values that is specified in the program
+      \end{itemize}
+    \item The above namelist can be read with a single statement as in (other options to \lstfortran{READ} statement can be added if needed)\\
+      \lstfortran{READ(10, nml=moldyn)}
+    \item To write the values of a namelist is similar\\
+      \lstfortran{WRITE(20, nml=moldyn)}
+    \item Namelist names and variables are case insensitive.
+    \item The namelist designator cannot have blanks
+    \item Arrays may be namelist variables, but all the values of the array must be listed after the equals sign following its name
+    \item If any variable name is repeated, the final value is taken.
+    \item Namelist are convenient when you want to read different input for different types of calculations within the same program.
+    \item Amber Molecular Dynamics package uses namelist to read input. The following is the input file from Amber's test directory.
+      \begin{lstlisting}
+ &cntrl 
+   ntx=1, imin=5, ipb=1, inp=2, ntb=0,  
+ /      
+ &pb
+   npbverb=0, istrng=0, epsout=80.0, epsin=1.0, space=0.5,  
+   accept=0.001, sprob=1.6, radiopt=1, dprob=1.6,   
+ /      
+      \end{lstlisting}
+    \item If multiple variables are listed on the same line, they need to be separated by a comma (,) not semicolon(;)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{Internal Read and Write}
+  \begin{itemize}
+    \item Fortran allows a programmer to cast numeric types to character type and vice versa.
+    \item The character variable functions as an internal file.
+    \item An \textbf{internal write} converts from numeric to character type, while
+    \item an \textbf{internal read} converts from character to numeric type.
+    \item This is useful feature particularly for writing output of arrays that are dynamically allocated.
+    \item Example: Convert an integer to a character
+      \begin{lstlisting}[language={[90]Fortran}]
+ CHARACTER(len=10) :: num
+ INTEGER           :: inum
+ WRITE(NUM,'(A10)') inum
+      \end{lstlisting}
+      \framebreak
+    \item Example: Convert an character to an integer
+      \begin{lstlisting}[language={[90]Fortran}]
+ CHARACTER(len=10) :: num = "435"
+ INTEGER   :: inum
+ READ(inum,'(I4)') num
+      \end{lstlisting}
+    \item Example: Writing data when parameters are not known at compile time
+      \begin{lstlisting}[language={[90]Fortran}]
+ CHARACTER(len=23) :: xx
+ CHARACTER(len=13) :: outfile
+ INTEGER  :: natoms, istep
+ REAL     :: time
+ REAL, ALLOCATABLE, DIMENSION(:) :: coords
+
+ natoms = 100 ; ALLOCATE(coords(natoms*3))
+
+ WRITE(xx,'(A,I5,A)') '(F12.6,', 3*natoms, '(2X,E15.8))'
+ WRITE(outfile,'(A8,I5.5,A4)') 'myoutput', istep, '.dat'
+
+ OPEN(unit = 10, file = outfile)
+ WRITE(10, xx) time, coords(:)
+      \end{lstlisting}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{End of Day 1}
