@@ -1122,27 +1122,6 @@ end do finite
   \end{columns}
 \end{frame}
 
-
-\section{Input and Output}
-\begin{frame}[fragile,allowframebreaks]
-  \frametitle{Input and Output Descriptors}
-  \begin{itemize}
-    \item Input and output are accomplished by operations on files.
-    \item Files are identified by some form of file handle, in Fortran called the \textbf{unit number}.
-    \item We have already encountered read and write command such as \lstfortran{print *,} and \lstfortran{read *,}
-    \item Alternative commands for read and write are 
-    \item[] \lstfortran{read(unit,*)}
-    \item[] \lstfortran{write(unit,*)}
-    \item There is no comma after the ')'. FORTRAN allowed statements of the form \lstfortran{write(unit,*),} which is not supported on some compilers such as IBM XLF. Please avoid this notation in FORTRAN programs.
-    \item The default unit number 5 is associated with the standard input, and
-    \item unit number 6 is assigned to standard output.
-    \item You can replace \lstfortran{unit} with $\star$ in which case standard input (5) and output (6) file descriptors are used.
-    \item The second $\star$ in \lstfortran{read/write} or the one in the \lstfortran{print */read *} corresponds to unformatted input/output.
-    \item If I/O is formatted, then $\star$ is replaced with
-    \item[]\lstfortran{fmt=<format specifier>}
-  \end{itemize}
-\end{frame}
-
 \begin{frame}[allowframebreaks]{Exercise}
   \begin{itemize}
   \item In mathematical terms, the sequence $F_n$ of Fibonacci numbers is defined by the recurrence relation
@@ -1247,6 +1226,27 @@ end do finite
       \EndFunction
     \end{algorithmic}
   \end{algorithm}
+\end{frame}
+
+
+\section{Input and Output}
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{Input and Output Descriptors}
+  \begin{itemize}
+    \item Input and output are accomplished by operations on files.
+    \item Files are identified by some form of file handle, in Fortran called the \textbf{unit number}.
+    \item We have already encountered read and write command such as \lstfortran{print *,} and \lstfortran{read *,}
+    \item Alternative commands for read and write are 
+    \item[] \lstfortran{read(unit,*)}
+    \item[] \lstfortran{write(unit,*)}
+    \item There is no comma after the ')'. FORTRAN allowed statements of the form \lstfortran{write(unit,*),} which is not supported on some compilers such as IBM XLF. Please avoid this notation in FORTRAN programs.
+    \item The default unit number 5 is associated with the standard input, and
+    \item unit number 6 is assigned to standard output.
+    \item You can replace \lstfortran{unit} with $\star$ in which case standard input (5) and output (6) file descriptors are used.
+    \item The second $\star$ in \lstfortran{read/write} or the one in the \lstfortran{print */read *} corresponds to unformatted input/output.
+    \item If I/O is formatted, then $\star$ is replaced with
+    \item[]\lstfortran{fmt=<format specifier>}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile,allowframebreaks]{File Operations}
