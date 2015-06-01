@@ -689,7 +689,7 @@ end module potential
   \end{itemize}    
   \begin{columns}[t]
     \column{6cm}
-      \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4.5}{5}\selectfont\ttfamily]{./Exercise/factorial.f90}
+      \lstinputlisting[language={[90]Fortran},basicstyle=\fontsize{4.5}{5}\selectfont\ttfamily]{./Exercise/Solution/factorial.f90}
     \column{5cm}
       \begin{Verbatim}[fontsize=\fontsize{4.5}{5}\selectfont,formatcom=\color{indigo}]
 [apacheco@qb4 Exercise] ./factorial
@@ -723,6 +723,34 @@ end module potential
   \begin{itemize}
     \scriptsize
     \item Here since \lstfortran{subroutine get_pot\_force} is an internal procedure, no \lstfortran{interface} is required since it is already implicit and all variable declarations are carried over from \lstfortran{subroutine verlet}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Intent}
+  \begin{itemize}
+    \item \lstfortran{intent} attribute was introduced in Fortran 90 and is recommended as it
+    \begin{enumerate}
+      \item allows compilers to check for coding errors
+      \item facilitates efficient compilation and optimization
+    \end{enumerate}
+    \item Declare if a parameter is
+    \begin{enumerate}
+      \item[$\vardiamond$]Input: \lstfortran{intent(in)} 
+      \item[$\vardiamond$]Output: \lstfortran{intent(out)}
+      \item[$\vardiamond$]Both: \lstfortran{intent(inout)}
+    \end{enumerate}
+    \begin{lstlisting}[language={[90]Fortran},mathescape,basicstyle=\fontsize{6}{7}\selectfont\ttfamily]
+subroutine verlet(coord, coord_t0, vel_t0, vel, acc_t0, acc, force, pener)
+  use precision
+  use param, only : natom, mass, boxl, dt
+  implicit none
+  real(dp),dimension(:,:), intent(in) :: coord_t0, vel_t0, acc_t0
+  real(dp),dimension(:,:), intent(out) :: coord, vel, acc, force
+  real(dp), intent(out) :: pener
+$\vdots$
+end subroutine verlet
+    \end{lstlisting}
+    \item A variable declared as \lstfortran{intent(in)} in a procedure cannot be changed during the execution of the procedure (see point 1 above)
   \end{itemize}
 \end{frame}
 
@@ -1039,34 +1067,6 @@ end subroutine something
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Intent}
-  \begin{itemize}
-    \item \lstfortran{intent} attribute was introduced in Fortran 90 and is recommended as it
-    \begin{enumerate}
-      \item allows compilers to check for coding errors
-      \item facilitates efficient compilation and optimization
-    \end{enumerate}
-    \item Declare if a parameter is
-    \begin{enumerate}
-      \item[$\vardiamond$]Input: \lstfortran{intent(in)} 
-      \item[$\vardiamond$]Output: \lstfortran{intent(out)}
-      \item[$\vardiamond$]Both: \lstfortran{intent(inout)}
-    \end{enumerate}
-    \begin{lstlisting}[language={[90]Fortran},mathescape,basicstyle=\fontsize{6}{7}\selectfont\ttfamily]
-subroutine verlet(coord, coord_t0, vel_t0, vel, acc_t0, acc, force, pener)
-  use precision
-  use param, only : natom, mass, boxl, dt
-  implicit none
-  real(dp),dimension(:,:), intent(in) :: coord_t0, vel_t0, acc_t0
-  real(dp),dimension(:,:), intent(out) :: coord, vel, acc, force
-  real(dp), intent(out) :: pener
-$\vdots$
-end subroutine verlet
-    \end{lstlisting}
-    \item A variable declared as \lstfortran{intent(in)} in a procedure cannot be changed during the execution of the procedure (see point 1 above)
-  \end{itemize}
-\end{frame}
-
 \begin{frame}[fragile,allowframebreaks]{Modules}
   \begin{itemize}
 %    \item A module is a program unit that is not executed directly, but contains data specifications and procedures that may be utilized by other program units via the use statement.
@@ -1177,7 +1177,6 @@ ifort -c precision.f90 param.f90 potential.f90
 ifort -o md md.f90 initialize.f90 verlet.f90 linearmom.f90 get_temp.f90 \
    -I{path to directory containing the .mod files}
       \end{Verbatim}
-    \item The Makefile tutorial will cover this aspect in more detail.
   \end{itemize}
 \end{frame}
 
