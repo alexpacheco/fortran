@@ -8,8 +8,8 @@ else ifeq ($(COMP),ibm)
 	FC=xlf90
 	FFLAGS=
 else
-	FC=gfortran
-	FFLAGS=-g
+	FC=gfortran-mp-11
+	FFLAGS=-g  -pg
 endif
 
 OBJS = md-orig.o

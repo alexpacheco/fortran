@@ -1,0 +1,77 @@
+% Style file for LSU outer theme
+% Modified by Alex Pacheco, High Performance Computing, Louisiana State University.
+%  wget http://www.cct.lsu.edu/~apacheco/tutorials/TeX/beamerouterthemetigers.sty
+% Required by beamerthemeLSU.sty
+%  wget http://www.cct.lsu.edu/~apacheco/tutorials/TeX/beamerthemeLSU.sty
+%  Dated: Oct 18 2011
+%  Email <apacheco_at_cct.lsu.edu> for comments or modifications.
+%  This theme places two logos at the bottom:
+%	Main logo at the right (for University Logo) and a sublogo at the left (for Institute Logo)
+%	Also places the short institute and frame numbers between the two logos.
+% Below is the original copyright and license information:
+% --------------------------------------------------------------------------------------------
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+% --------------------------------------------------------------------------------------------
+
+\ProvidesPackageRCS $Header: /usr/local/texlive/2010/texmf-dist/tex/latex/beamer/themes/outer/beamerouterthemetigers.sty,v d02a7cf4d8ae 2010/06/17 09:11:41 rivanvx $
+
+
+\mode<presentation>
+
+
+% Mini frames
+
+% Navigation symbols
+
+\defbeamertemplate*{navigation symbols}{lehigh}
+{%
+  \hbox{%
+    \hbox{\insertslidenavigationsymbol}
+    \hbox{\insertframenavigationsymbol}
+    \hbox{\insertsubsectionnavigationsymbol}
+    \hbox{\insertsectionnavigationsymbol}
+    \hbox{\insertdocnavigationsymbol}
+    \hbox{\insertbackfindforwardnavigationsymbol}%
+  }%
+}
+
+% No navigation symbols in handout or trans mode:
+\only<handout| trans>{\setbeamertemplate{navigation symbols}{}}
+
+
+
+% Section and subsections in head/foot
+
+\defbeamertemplate*{section in head/foot}{lehigh}
+{\insertsectionhead}
+
+\defbeamertemplate*{section in head/foot shaded}{lehigh}[1][50]
+{\color{fg!#1!bg}\usebeamertemplate{section in head/foot}}
+
+\defbeamertemplate*{subsection in head/foot}{tigers}
+{\insertsubsectionhead}
+
+\defbeamertemplate*{subsection in head/foot shaded}{tigers}[1][50]
+{\color{fg!#1!bg}\usebeamertemplate{subsection in head/foot}}
+
+\defbeamertemplate*{subsubsection in head/foot}{tigers}
+{\insertsubsubsectionhead}
+
+\defbeamertemplate*{subsubsection in head/foot shaded}{tigers}[1][50]
+{\color{fg!#1!bg}\usebeamertemplate{subsubsection in head/foot}}
+
+
+% Logo at top right
+\def\trlogo{\setbeamertemplate{trlogo}}
+\def\inserttrlogo{\usebeamertemplate*{trlogo}}
+
+
+\mode
+<all>
