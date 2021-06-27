@@ -9,7 +9,7 @@ intermediate ( [TeX](Fortran2.tex) |
 
 * LONI Workshop at LSU on Feb. 14, 2012
 * HPC Training Series at LSU on Feb. 19, and Mar. 12, 2014
-* LTS Programming Workshop at Lehigh University on June 1-2, 2015
+* HPC Programming Workshop at Lehigh University on June 1-2, 2015, and June 28-30, 2021
 
 # Contributer
 Alex Pacheco  
