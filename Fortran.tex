@@ -1601,7 +1601,7 @@ end do finite
       \begin{center}
         \includegraphics[width=4cm,clip=true]{./graphics/array1}
       \end{center}
-    \item Each array has a type and each element of holds a value of that type.
+    \item Each array has a type and each element of the array holds a value of that type.
   \end{itemize}
 \end{frame} 
 
@@ -3159,6 +3159,7 @@ end type painted_line_type
     \item Fortran 90 course at University of Liverpool, \url{http://www.liv.ac.uk/HPC/F90page.html}
     \item Introduction to Modern Fortran, University of Cambridge, \url{http://www.ucs.cam.ac.uk/docs/course-notes/unix-courses/Fortran}
     \item Scientific Programming in Fortran 2003: A tutorial Including Object-Oriented Programming, Katherine Holcomb, University of Virginia.
+    \item Fortran Wiki \url{http://fortranwiki.org/fortran/show/HomePage}
   \end{itemize}
 \end{frame}
 
@@ -3240,5 +3241,19 @@ end type painted_line_type
     \end{algorithmic}
   \end{algorithm}
 \end{frame}
+
+\begin{frame}[fragile]{Additional Exercises: Molecular Dynamics}
+  \begin{itemize}
+    \item Molecular Dynamics code for melting of solid Argon using Lennard-Jones Potential.
+    \item Your goal is to rewrite the code using Modern Fortran concepts that you have grasped.
+    \item This exercise is more of a ``What concepts have I learned of Modern Fortran?'', so there are multiple correct solutions. 
+    \item Code can be obtained from \url{https://github.com/alexpacheco/moleculardynamics}
+    \item \lstinline|md-orig.f90| is the original code that you should begin working. 
+    \item There is no ``correct solution'', however there are multiple solutions \lstinline|md-v{1-5}.f90| based on various concepts presented.
+    \item It’s entirely up to you to decide which solution you want to arrive at.
+    \item Compare the results of your edited code with that obtained from \lstinline|md-orig.f90|. If the results are not the same, debug your code.
+  \end{itemize}
+\end{frame}
+
 \end{document}
 
