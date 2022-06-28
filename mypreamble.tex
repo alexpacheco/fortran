@@ -1,5 +1,5 @@
 
-\setbeamersize{text margin left=10pt,text margin right=10pt}
+%\setbeamersize{text margin left=10pt,text margin right=10pt}
 \usetheme{lehigh}
 
 
@@ -7,6 +7,9 @@
 \usefonttheme{serif}
 
 
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
 %\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 %\usepackage{amsmath,amssymb,amsfonts,subfigure,pifont}
 \usepackage{multirow,multicol}
@@ -202,4 +205,19 @@ deletekeywords={\dots},              % if you want to delete keywords from the g
 {
 \begin{beamerboxesrounded}[upper=uppercol2,lower=lowercol2,shadow=false]}
 {\end{beamerboxesrounded}}
+
+% LOGOS
+\pgfdeclareimage[height=0.55cm]{lucolor-logo}{LehighU_official-logo_Color.png}
+\rplogo{\pgfuseimage{lucolor-logo}}
+\pgfdeclareimage[height=0.55cm]{luwhite-logo}{LehighU_official-logo_White.png}
+\tplogo{\pgfuseimage{luwhite-logo}}
+% footer logo
+%\pgfdeclareimage[width=0.3\paperwidth]{university-logo}{lulogo}
+%\tllogo{\pgfuseimage{university-logo}}
+
+%titlepage logo
+%\titlegraphic{\includegraphics[scale=0.5]{lu}}
+
+\beamertemplateballitem
+
 
